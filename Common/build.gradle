@@ -20,7 +20,7 @@ minecraft {
         }
     }
     if (project.hasProperty('common_aws_enabled') && project.findProperty('common_aws_enabled').toBoolean()) {
-        accessWideners(project(":Common").file("src/main/resources/nyfsmultiloader.accesswidener"))
+        accessWideners(project(":Common").file("src/main/resources/waterballoon.accesswidener"))
     }
 }
 
