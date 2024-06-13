@@ -1,0 +1,42 @@
+plugins {
+    id 'multiloader-common'
+//    id 'net.neoforged.gradle.userdev' version '7.0.133'
+    id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'com.matyrobbrt.mc.registrationutils' version "${regutils_version}"
+}
+
+
+minecraft {
+    mappings channel: mappings_channel, version: mappings_version
+//    version(minecraft_version)
+    def aw = file('src/main/resources/META-INF/accesstransformer.cfg')
+    if(aw.exists()){
+        accessTransformer = aw
+    }
+}
+repositories {
+    maven { url "https://maven.fabricmc.net/" }
+}
+dependencies {
+    minecraft "net.minecraft:joined:${minecraft_version}"
+    compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
+    compileOnly "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:${project.forge_config_api_port_version}"
+}
+
+configurations {
+    commonJava {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+    commonResources {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+}
+
+artifacts {
+    commonJava sourceSets.main.java.sourceDirectories.singleFile
+    commonResources sourceSets.main.resources.sourceDirectories.singleFile
+}
+
