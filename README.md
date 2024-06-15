@@ -9,3 +9,5 @@ Craft some water balloons in the crafting table (the recipe is unlocked once you
 Then, have some fun by tossing them at each other! They do no damage (unless you are an Enderman), but give you some slowness for a short time!
 
 You can also have fun launching water balloons at each other with a Sling Shot and a Balloon Bazooka! The crafting recipes for those are unlocked by obtaining String and an Iron Ingot respectively)
+
+SirJain's Discord: https://discord.gg/nwDQcxpJG8
