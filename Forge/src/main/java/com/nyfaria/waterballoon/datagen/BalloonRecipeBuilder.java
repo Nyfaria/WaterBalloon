@@ -18,8 +18,12 @@ import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.recipes.CraftingRecipeBuilder;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -27,16 +31,19 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 
-public class BalloonRecipeBuilder implements RecipeBuilder {
+public class BalloonRecipeBuilder extends CraftingRecipeBuilder implements RecipeBuilder {
+   private final RecipeCategory category;
    private final Item result;
    private final int count;
    private final List<String> rows = Lists.newArrayList();
    private final Map<Character, Ingredient> key = Maps.newLinkedHashMap();
    private final Advancement.Builder advancement = Advancement.Builder.advancement();
+   private boolean showNotification = true;
    @Nullable
    private String group;
 
-   public BalloonRecipeBuilder(ItemLike pResult, int pCount) {
+   public BalloonRecipeBuilder(RecipeCategory pCategory, ItemLike pResult, int pCount) {
+      this.category = pCategory;
       this.result = pResult.asItem();
       this.count = pCount;
    }
@@ -44,15 +51,15 @@ public class BalloonRecipeBuilder implements RecipeBuilder {
    /**
     * Creates a new builder for a shaped recipe.
     */
-   public static BalloonRecipeBuilder shaped(ItemLike pResult) {
-      return shaped(pResult, 1);
+   public static BalloonRecipeBuilder shaped(RecipeCategory pCategory, ItemLike pResult) {
+      return shaped(pCategory, pResult, 1);
    }
 
    /**
     * Creates a new builder for a shaped recipe.
     */
-   public static BalloonRecipeBuilder shaped(ItemLike pResult, int pCount) {
-      return new BalloonRecipeBuilder(pResult, pCount);
+   public static BalloonRecipeBuilder shaped(RecipeCategory pCategory, ItemLike pResult, int pCount) {
+      return new BalloonRecipeBuilder(pCategory, pResult, pCount);
    }
 
    /**
@@ -112,9 +119,12 @@ public class BalloonRecipeBuilder implements RecipeBuilder {
    public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ResourceLocation pRecipeId) {
       this.ensureValid(pRecipeId);
       this.advancement.parent(ROOT_RECIPE_ADVANCEMENT).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(RequirementsStrategy.OR);
-      pFinishedRecipeConsumer.accept(new BalloonRecipeBuilder.Result(pRecipeId, this.result, this.count, this.group == null ? "" : this.group, this.rows, this.key, this.advancement, new ResourceLocation(pRecipeId.getNamespace(), "recipes/" + this.result.getItemCategory().getRecipeFolderName() + "/" + pRecipeId.getPath())));
+      pFinishedRecipeConsumer.accept(new ShapedRecipeBuilder.Result(pRecipeId, this.result, this.count, this.group == null ? "" : this.group, determineBookCategory(this.category), this.rows, this.key, this.advancement, pRecipeId.withPrefix("recipes/" + this.category.getFolderName() + "/"), this.showNotification));
    }
-
+   public BalloonRecipeBuilder showNotification(boolean pShowNotification) {
+      this.showNotification = pShowNotification;
+      return this;
+   }
    /**
     * Makes sure that this recipe is valid and obtainable.
     */
@@ -187,7 +197,7 @@ public class BalloonRecipeBuilder implements RecipeBuilder {
 
          pJson.add("key", jsonobject);
          JsonObject jsonobject1 = new JsonObject();
-         jsonobject1.addProperty("item", Registry.ITEM.getKey(this.result).toString());
+         jsonobject1.addProperty("item", BuiltInRegistries.ITEM.getKey(this.result).toString());
          if (this.count > 1) {
             jsonobject1.addProperty("count", this.count);
          }

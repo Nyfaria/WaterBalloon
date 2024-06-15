@@ -10,7 +10,8 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.nyfaria.waterballoon.init.RecipeInit;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -20,6 +21,7 @@ import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -58,7 +60,7 @@ public class BalloonRecipe implements CraftingRecipe {
         return this.group;
     }
 
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return this.result;
     }
 
@@ -109,9 +111,10 @@ public class BalloonRecipe implements CraftingRecipe {
         return true;
     }
 
-    public ItemStack assemble(CraftingContainer inv) {
-        ItemStack result = this.getResultItem().copy();
-        DyeColor color = ((DyeItem)inv.getItem(1).getItem()).getDyeColor();
+    @Override
+    public ItemStack assemble(CraftingContainer pContainer, RegistryAccess pRegistryAccess) {
+        ItemStack result = this.getResultItem(pRegistryAccess).copy();
+        DyeColor color = ((DyeItem)pContainer.getItem(1).getItem()).getDyeColor();
         result.getOrCreateTag().putInt("color", color.getFireworkColor());
         return result;
     }
@@ -264,7 +267,7 @@ public class BalloonRecipe implements CraftingRecipe {
 
     public static Item itemFromJson(JsonObject itemObject) {
         String string = GsonHelper.getAsString(itemObject, "item");
-        Item item = (Item)Registry.ITEM.getOptional(new ResourceLocation(string)).orElseThrow(() -> {
+        Item item = BuiltInRegistries.ITEM.getOptional(new ResourceLocation(string)).orElseThrow(() -> {
             return new JsonSyntaxException("Unknown item '" + string + "'");
         });
         if (item == Items.AIR) {
@@ -272,6 +275,11 @@ public class BalloonRecipe implements CraftingRecipe {
         } else {
             return item;
         }
+    }
+
+    @Override
+    public CraftingBookCategory category() {
+        return CraftingBookCategory.EQUIPMENT;
     }
 
     public static class Serializer implements RecipeSerializer<BalloonRecipe> {

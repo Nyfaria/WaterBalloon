@@ -5,6 +5,7 @@ import com.nyfaria.waterballoon.registration.RegistryObject;
 import com.nyfaria.waterballoon.Constants;
 import com.nyfaria.waterballoon.entity.ThrownBalloon;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class EntityInit {
-    public static final RegistrationProvider<EntityType<?>> ENTITIES = RegistrationProvider.get(Registry.ENTITY_TYPE, Constants.MODID);
+    public static final RegistrationProvider<EntityType<?>> ENTITIES = RegistrationProvider.get(BuiltInRegistries.ENTITY_TYPE, Constants.MODID);
     public static final List<AttributesRegister<?>> attributeSuppliers = new ArrayList<>();
 
     public static final RegistryObject<EntityType<ThrownBalloon>> THROWN_BALLOON = registerEntity("thrown_balloon", ()-> EntityType.Builder.of(ThrownBalloon::new, MobCategory.MISC));

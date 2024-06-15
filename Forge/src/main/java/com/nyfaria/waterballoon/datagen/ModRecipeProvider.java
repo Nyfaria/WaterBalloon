@@ -1,8 +1,9 @@
 package com.nyfaria.waterballoon.datagen;
 
 import com.nyfaria.waterballoon.init.ItemInit;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Items;
@@ -11,13 +12,13 @@ import net.minecraftforge.common.Tags;
 import java.util.function.Consumer;
 
 public class ModRecipeProvider extends RecipeProvider {
-    public ModRecipeProvider(DataGenerator generator) {
+    public ModRecipeProvider(PackOutput generator) {
         super(generator);
     }
 
     @Override
-    protected void buildCraftingRecipes(Consumer<FinishedRecipe> recipeSaver) {
-        BalloonRecipeBuilder.shaped(ItemInit.WATER_BALLOON.get(), 16)
+    protected void buildRecipes(Consumer<FinishedRecipe> recipeSaver) {
+        BalloonRecipeBuilder.shaped(RecipeCategory.MISC,ItemInit.WATER_BALLOON.get(), 16)
                 .pattern("#D#")
                 .pattern("#B#")
                 .pattern("#S#")
@@ -27,7 +28,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('S', Items.STRING)
                 .unlockedBy("has_water_bucket", has(Items.WATER_BUCKET))
                 .save(recipeSaver);
-        ShapedRecipeBuilder.shaped(ItemInit.BAZOOKA.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,ItemInit.BAZOOKA.get())
                 .pattern("BBB")
                 .pattern("SI ")
                 .define('B', Items.IRON_BLOCK)
@@ -35,7 +36,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('S', Items.STICK)
                 .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
                 .save(recipeSaver);
-        ShapedRecipeBuilder.shaped(ItemInit.SLING_SHOT.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,ItemInit.SLING_SHOT.get())
                 .pattern("SDS")
                 .pattern(" S ")
                 .pattern(" S ")

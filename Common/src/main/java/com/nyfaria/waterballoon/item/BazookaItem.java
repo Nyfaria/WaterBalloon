@@ -1,8 +1,6 @@
 package com.nyfaria.waterballoon.item;
 
 import com.google.common.collect.Lists;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 import com.nyfaria.waterballoon.entity.ThrownBalloon;
 import com.nyfaria.waterballoon.init.ItemInit;
 import net.minecraft.ChatFormatting;
@@ -21,8 +19,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -34,6 +30,8 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -226,10 +224,9 @@ public class BazookaItem extends ProjectileWeaponItem {
             projectile = getArrow(level, shooter, crossbowStack, ammoStack);
 
             Vec3 vec3 = shooter.getUpVector(1.0F);
-            Quaternion quaternion = new Quaternion(new Vector3f(vec3), projectileAngle, true);
+            Quaternionf quaternionf = (new Quaternionf()).setAngleAxis((double)(projectileAngle * ((float)Math.PI / 180F)), vec3.x, vec3.y, vec3.z);
             Vec3 vec32 = shooter.getViewVector(1.0F);
-            Vector3f vector3f = new Vector3f(vec32);
-            vector3f.transform(quaternion);
+            Vector3f vector3f = vec32.toVector3f().rotate(quaternionf);
             projectile.shoot(vector3f.x(), vector3f.y(), vector3f.z(), velocity, inaccuracy);
 
             crossbowStack.hurtAndBreak(1, shooter, (livingEntity) -> {
