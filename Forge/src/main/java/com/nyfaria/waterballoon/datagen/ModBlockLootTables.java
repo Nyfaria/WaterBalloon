@@ -1,22 +1,15 @@
 package com.nyfaria.waterballoon.datagen;
 
-import com.nyfaria.waterballoon.registration.RegistryObject;
-import com.nyfaria.waterballoon.init.BlockInit;
-import net.minecraft.data.loot.BlockLootSubProvider;
-import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
 
-import java.util.Set;
 import java.util.stream.Stream;
 
-public class ModBlockLootTables extends BlockLootSubProvider {
-    protected ModBlockLootTables() {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags());
-    }
+public class ModBlockLootTables extends BlockLoot {
     @Override
-    protected void generate() {
+    protected void addTables() {
         this.getBlockStream().filter(this::shouldDropSelf).forEach(this::dropSelf);
     }
 
@@ -26,7 +19,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     }
 
     protected Stream<Block> getBlockStream() {
-        return BlockInit.BLOCKS.getEntries().stream().map(RegistryObject::get);
+
+//        return BlockInit.BLOCKS.getEntries().stream().map(RegistryObject::get);
+        return Stream.empty();
     }
 
     protected boolean shouldDropSelf(Block block) {

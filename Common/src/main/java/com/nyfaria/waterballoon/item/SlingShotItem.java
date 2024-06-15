@@ -42,6 +42,7 @@ public class SlingShotItem extends ProjectileWeaponItem implements Vanishable {
                     if (!level.isClientSide) {
 
                         ThrownBalloon $$11 = new ThrownBalloon(livingEntity, level);
+                        $$11.setItem($$6);
                         $$11.shootFromRotation($$4, $$4.getXRot(), $$4.getYRot(), 0.0F, $$8 * 3.0F, 1.0F);
 
                         stack.hurtAndBreak(1, $$4, ($$1x) -> {
@@ -86,10 +87,14 @@ public class SlingShotItem extends ProjectileWeaponItem implements Vanishable {
 
     public InteractionResultHolder<ItemStack> use(Level $$0, Player $$1, InteractionHand $$2) {
         ItemStack $$3 = $$1.getItemInHand($$2);
-        boolean $$4 = !$$1.getProjectile($$3).isEmpty();
+        ItemStack stack = $$1.getProjectile($$3);
+        boolean $$4 = !stack.isEmpty();
         if (!$$1.getAbilities().instabuild && !$$4) {
             return InteractionResultHolder.fail($$3);
         } else {
+            if(stack.hasTag()) {
+                $$3.getOrCreateTag().putInt("color", stack.getTag().getInt("color"));
+            }
             $$1.startUsingItem($$2);
             return InteractionResultHolder.consume($$3);
         }

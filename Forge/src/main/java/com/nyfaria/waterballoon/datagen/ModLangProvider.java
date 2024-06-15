@@ -1,12 +1,11 @@
 package com.nyfaria.waterballoon.datagen;
 
 import com.google.common.collect.ImmutableMap;
-import com.nyfaria.waterballoon.registration.RegistryObject;
+import com.nyfaria.grinnersents.registration.RegistryObject;
 import com.nyfaria.waterballoon.Constants;
-import com.nyfaria.waterballoon.init.BlockInit;
 import com.nyfaria.waterballoon.init.EntityInit;
 import com.nyfaria.waterballoon.init.ItemInit;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -25,7 +24,7 @@ public class ModLangProvider extends LanguageProvider {
             "sus", ""
     );
 
-    public ModLangProvider(PackOutput gen) {
+    public ModLangProvider(DataGenerator gen) {
         super(gen, Constants.MODID, "en_us");
     }
 
@@ -33,8 +32,7 @@ public class ModLangProvider extends LanguageProvider {
     protected void addTranslations() {
         ItemInit.ITEMS.getEntries().forEach(this::itemLang);
         EntityInit.ENTITIES.getEntries().forEach(this::entityLang);
-        BlockInit.BLOCKS.getEntries().forEach(this::blockLang);
-        add("itemGroup." + Constants.MODID, Constants.MOD_NAME);
+//        BlockInit.BLOCKS.getEntries().forEach(this::blockLang);
     }
 
     protected void itemLang(RegistryObject<Item> entry) {
