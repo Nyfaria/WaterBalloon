@@ -1,6 +1,5 @@
 package com.nyfaria.waterballoon;
 
-import com.nyfaria.waterballoon.init.BlockInit;
 import com.nyfaria.waterballoon.init.EntityInit;
 import com.nyfaria.waterballoon.init.ItemInit;
 
@@ -15,7 +14,6 @@ public class CommonClass {
     // code that gets invoked by the entry point of the loader specific projects.
     public static void init() {
         ItemInit.loadClass();
-        BlockInit.loadClass();
         EntityInit.loadClass();
     }
 }

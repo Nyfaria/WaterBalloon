@@ -16,6 +16,7 @@ public class ItemInit {
     public static final RegistryObject<Item> WATER_BALLOON = ITEMS.register("water_balloon", () -> new BalloonItem(getItemProperties().tab(CreativeModeTab.TAB_MISC)));
     public static final RegistryObject<Item> BAZOOKA = ITEMS.register("balloon_bazooka", () -> new BazookaItem(getItemProperties().tab(CreativeModeTab.TAB_MISC)));
     public static final RegistryObject<Item> SLING_SHOT = ITEMS.register("sling_shot", () -> new SlingShotItem(getItemProperties().tab(CreativeModeTab.TAB_MISC)));
+
     public static Item.Properties getItemProperties() {
         return new Item.Properties();
     }
