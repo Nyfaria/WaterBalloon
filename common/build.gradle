@@ -21,7 +21,6 @@ repositories {
 dependencies {
     minecraft "net.minecraft:joined:${minecraft_version}"
     compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
-    compileOnly "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:${project.forge_config_api_port_version}"
 }
 
 configurations {
