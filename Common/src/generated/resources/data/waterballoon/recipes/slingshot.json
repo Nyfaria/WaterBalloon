@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "D": {
+      "item": "minecraft:string"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "SDS",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "item": "waterballoon:slingshot"
+  }
+}

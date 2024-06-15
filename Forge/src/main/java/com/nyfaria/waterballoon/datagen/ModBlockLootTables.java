@@ -1,7 +1,5 @@
 package com.nyfaria.waterballoon.datagen;
 
-import com.nyfaria.grinnersents.registration.RegistryObject;
-import com.nyfaria.waterballoon.init.BlockInit;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -21,7 +19,9 @@ public class ModBlockLootTables extends BlockLoot {
     }
 
     protected Stream<Block> getBlockStream() {
-        return BlockInit.BLOCKS.getEntries().stream().map(RegistryObject::get);
+
+//        return BlockInit.BLOCKS.getEntries().stream().map(RegistryObject::get);
+        return Stream.empty();
     }
 
     protected boolean shouldDropSelf(Block block) {

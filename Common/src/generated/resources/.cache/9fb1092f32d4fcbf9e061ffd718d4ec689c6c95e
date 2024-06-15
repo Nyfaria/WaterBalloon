@@ -1,3 +1,7 @@
-// 1.19.2	2024-06-13T00:23:50.6220806	Recipes
+// 1.19.2	2024-06-14T19:55:39.5118592	Recipes
+ed1ec971af5417981be7a40b79a64781e388a942 data/waterballoon/advancements/recipes/misc/balloon_bazooka.json
+dfac1a85dcce4809e3787f1348b439a67e49c0cf data/waterballoon/advancements/recipes/misc/slingshot.json
 655cf6db1c87b02a0e5795c463675a1566c9036f data/waterballoon/advancements/recipes/misc/water_balloon.json
-3b723f7866c4a9e6bae5264cb64fa79afb7f12ec data/waterballoon/recipes/water_balloon.json
+c4c3132c13801869c6d821c185bc58d63a8fb969 data/waterballoon/recipes/balloon_bazooka.json
+f9e39c0d8daec87922f7c142d51bbe3351cf546b data/waterballoon/recipes/slingshot.json
+831d82dd623049cb99f75df561fec5d8fec34354 data/waterballoon/recipes/water_balloon.json

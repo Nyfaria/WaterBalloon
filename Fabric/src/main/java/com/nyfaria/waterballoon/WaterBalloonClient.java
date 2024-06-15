@@ -7,8 +7,11 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.UseAnim;
 
 public class WaterBalloonClient implements ClientModInitializer {
 
@@ -36,7 +39,23 @@ public class WaterBalloonClient implements ClientModInitializer {
             b = afloat1[2] * (1.0F - f3) + afloat2[2] * f3;
             int rgb = (int) (r * 255) << 16 | (int) (g * 255) << 8 | (int) (b * 255);
             return rgb;
-        }, ItemInit.WATER_BALLOON.get());
+        }, ItemInit.WATER_BALLOON.get(), ItemInit.SLING_SHOT.get());
+        ItemProperties.register(ItemInit.SLING_SHOT.get(), new ResourceLocation("pulling"),
+                (stack, world, entity, i) -> {
+                    if (entity == null) {
+                        return 0.0F;
+                    } else {
+                        return entity.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration() - entity.getUseItemRemainingTicks()) / 20.0F;
+                    }
+                });
+        ItemProperties.register(ItemInit.SLING_SHOT.get(), new ResourceLocation("pull"),
+                (stack, world, entity, i) -> {
+                    if (entity == null) {
+                        return 0.0F;
+                    } else {
+                        return entity.getUseItem() == stack && entity.getUseItem().getUseAnimation() == UseAnim.BOW ? 1.0F : 0.0F;
+                    }
+                });
 
     }
 }
