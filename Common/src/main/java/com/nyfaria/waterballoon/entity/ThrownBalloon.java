@@ -43,7 +43,7 @@ public class ThrownBalloon extends ThrowableItemProjectile {
     @Override
     protected void onHit(HitResult $$0) {
         super.onHit($$0);
-        discard();
+        this.discard();
     }
 
     @Nullable
@@ -67,6 +67,7 @@ public class ThrownBalloon extends ThrowableItemProjectile {
             level.addFreshEntity(cloud);
 
         }
+
         super.onHitBlock($$0);
     }
 
@@ -80,6 +81,12 @@ public class ThrownBalloon extends ThrowableItemProjectile {
                 }
             }
         }
+
         super.onHitEntity($$0);
+    }
+
+    @Override
+    protected float getGravity() {
+        return 0.1f;
     }
 }
