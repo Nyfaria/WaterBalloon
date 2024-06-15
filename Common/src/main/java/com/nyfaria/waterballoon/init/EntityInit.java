@@ -3,10 +3,12 @@ package com.nyfaria.waterballoon.init;
 import com.nyfaria.waterballoon.registration.RegistrationProvider;
 import com.nyfaria.waterballoon.registration.RegistryObject;
 import com.nyfaria.waterballoon.Constants;
-import net.minecraft.core.registries.Registries;
+import com.nyfaria.waterballoon.entity.ThrownBalloon;
+import net.minecraft.core.Registry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 
 import java.util.ArrayList;
@@ -14,8 +16,10 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class EntityInit {
-    public static final RegistrationProvider<EntityType<?>> ENTITIES = RegistrationProvider.get(Registries.ENTITY_TYPE, Constants.MODID);
+    public static final RegistrationProvider<EntityType<?>> ENTITIES = RegistrationProvider.get(Registry.ENTITY_TYPE, Constants.MODID);
     public static final List<AttributesRegister<?>> attributeSuppliers = new ArrayList<>();
+
+    public static final RegistryObject<EntityType<ThrownBalloon>> THROWN_BALLOON = registerEntity("thrown_balloon", ()-> EntityType.Builder.of(ThrownBalloon::new, MobCategory.MISC));
 
     private static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String name, Supplier<EntityType.Builder<T>> supplier) {
         return ENTITIES.register(name, () -> supplier.get().build(Constants.MODID + ":" + name));

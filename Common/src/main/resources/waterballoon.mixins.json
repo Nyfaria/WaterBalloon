@@ -7,7 +7,8 @@
   "mixins": [
   ],
   "client": [
-    "ExampleMixin"
+    "ExampleMixin",
+    "PlayerRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
