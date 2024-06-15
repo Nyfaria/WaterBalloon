@@ -47,7 +47,7 @@
 	- forgeconfigapiport 8.0.0
 	- java 17
 	- minecraft 1.20.1
-	- nyfsmultiloader 1.0.0
+	- waterballoon 1.0.0
 	- regutils-common 1.20.1-1.0.0
 [19:41:18] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/C:/Users/kinar/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.12.5+mixin.0.8.5/8d31fb97c3e0cd7c8dad3441851c523bcfae6d8e/sponge-mixin-0.12.5+mixin.0.8.5.jar Service=Knot/Fabric Env=CLIENT
 [19:41:18] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!

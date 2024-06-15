@@ -55,7 +55,7 @@
 	- forgeconfigapiport 8.0.0
 	- java 17
 	- minecraft 1.20.1
-	- nyfsmultiloader 1.0.0
+	- waterballoon 1.0.0
 	- regutils-common 1.20.1-1.0.0
 [19:41:18] [main/DEBUG] (FabricLoader/Knot) Adding D:\MinecraftModding\NyfsMultiLoader-Template\.gradle\loom-cache\remapped_mods\loom_mappings_1_20_1_layered_hash_1391204022_v2\net\fabricmc\fabric-api\fabric-models-v0\0.3.35+b3afc78b82\fabric-models-v0-0.3.35+b3afc78b82.jar to classpath.
 [19:41:18] [main/DEBUG] (FabricLoader/Knot) Adding D:\MinecraftModding\NyfsMultiLoader-Template\.gradle\loom-cache\remapped_mods\loom_mappings_1_20_1_layered_hash_1391204022_v2\net\fabricmc\fabric-api\fabric-api-lookup-api-v1\1.6.34+4d8536c982\fabric-api-lookup-api-v1-1.6.34+4d8536c982.jar to classpath.
@@ -110,8 +110,8 @@
 [19:41:18] [main/DEBUG] (FabricLoader/Entrypoint) Registering new-style initializer fuzs.forgeconfigapiport.impl.client.ForgeConfigAPIPortFabricClient for mod forgeconfigapiport (key client)
 [19:41:18] [main/DEBUG] (FabricLoader/Entrypoint) Registering new-style initializer fuzs.forgeconfigapiport.impl.ForgeConfigAPIPortFabric for mod forgeconfigapiport (key main)
 [19:41:18] [main/DEBUG] (FabricLoader/Entrypoint) Registering new-style initializer net.fabricmc.fabric.impl.client.indigo.Indigo for mod fabric-renderer-indigo (key client)
-[19:41:18] [main/DEBUG] (FabricLoader/Entrypoint) Registering new-style initializer com.nyfaria.nyfsmultiloader.ExampleModClient for mod nyfsmultiloader (key client)
-[19:41:18] [main/DEBUG] (FabricLoader/Entrypoint) Registering new-style initializer com.nyfaria.nyfsmultiloader.ExampleMod for mod nyfsmultiloader (key main)
+[19:41:18] [main/DEBUG] (FabricLoader/Entrypoint) Registering new-style initializer com.nyfaria.waterballoon.WaterBalloonClient for mod waterballoon (key client)
+[19:41:18] [main/DEBUG] (FabricLoader/Entrypoint) Registering new-style initializer com.nyfaria.waterballoon.WaterBalloon for mod waterballoon (key main)
 [19:41:18] [main/DEBUG] (FabricLoader/Entrypoint) Registering new-style initializer net.fabricmc.fabric.impl.client.event.lifecycle.ClientLifecycleEventsImpl for mod fabric-lifecycle-events-v1 (key client)
 [19:41:18] [main/DEBUG] (FabricLoader/Entrypoint) Registering new-style initializer net.fabricmc.fabric.impl.event.lifecycle.LifecycleEventsImpl for mod fabric-lifecycle-events-v1 (key main)
 [19:41:18] [main/DEBUG] (FabricLoader/Entrypoint) Registering new-style initializer net.fabricmc.fabric.impl.gametest.FabricGameTestModInitializer for mod fabric-gametest-api-v1 (key main)
@@ -387,8 +387,8 @@
 [19:41:18] [main/DEBUG] (FabricLoader/Mixin) Remapping refMap forgeconfigapiport.refmap.json using remapper chain
 [19:41:18] [main/DEBUG] (FabricLoader/Mixin) Selecting config fabric-renderer-indigo.mixins.json
 [19:41:18] [main/DEBUG] (FabricLoader/Mixin) Remapping refMap client-fabric-renderer-indigo-refmap.json using remapper chain
-[19:41:18] [main/DEBUG] (FabricLoader/Mixin) Selecting config nyfsmultiloader.mixins.json
-[19:41:18] [main/DEBUG] (FabricLoader/Mixin) Remapping refMap nyfsmultiloader.refmap.json using remapper chain
+[19:41:18] [main/DEBUG] (FabricLoader/Mixin) Selecting config waterballoon.mixins.json
+[19:41:18] [main/DEBUG] (FabricLoader/Mixin) Remapping refMap waterballoon.refmap.json using remapper chain
 [19:41:18] [main/DEBUG] (FabricLoader/Mixin) Selecting config fabric-mining-level-api-v1.mixins.json
 [19:41:18] [main/DEBUG] (FabricLoader/Mixin) Remapping refMap fabric-mining-level-api-v1-refmap.json using remapper chain
 [19:41:18] [main/DEBUG] (FabricLoader/Mixin) Selecting config fabric-content-registries-v0.mixins.json
@@ -489,7 +489,7 @@
 [19:41:19] [main/DEBUG] (FabricLoader/Mixin) Preparing fabric-dimensions-v1.mixins.json (2)
 [19:41:19] [main/DEBUG] (FabricLoader/Mixin) Preparing forgeconfigapiport.common.mixins.json (3)
 [19:41:19] [main/DEBUG] (FabricLoader/Mixin) Preparing fabric-renderer-indigo.mixins.json (4)
-[19:41:19] [main/DEBUG] (FabricLoader/Mixin) Preparing nyfsmultiloader.mixins.json (1)
+[19:41:19] [main/DEBUG] (FabricLoader/Mixin) Preparing waterballoon.mixins.json (1)
 [19:41:19] [main/DEBUG] (FabricLoader/Mixin) Preparing fabric-mining-level-api-v1.mixins.json (3)
 [19:41:19] [main/DEBUG] (FabricLoader/Mixin) Preparing fabric-content-registries-v0.mixins.json (11)
 [19:41:19] [main/DEBUG] (FabricLoader/Mixin) Preparing fabric-loot-api-v2.mixins.json (5)
@@ -974,10 +974,10 @@
 [19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) fabric-entity-events-v1.client.mixins.json:elytra.ClientPlayerEntityMixin from mod fabric-entity-events-v1->@Inject::injectElytraStart(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V doesn't use it's CallbackInfo
 [19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) fabric-entity-events-v1.client.mixins.json:elytra.ClientPlayerEntityMixin from mod fabric-entity-events-v1->@Inject::injectElytraStart(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V has 0 override(s) in child classes
 [19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) fabric-entity-events-v1.client.mixins.json:elytra.ClientPlayerEntityMixin from mod fabric-entity-events-v1->@Inject::injectElytraStart(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V won't be passed a CallbackInfo as a result
-[19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) Mixing ExampleMixin from nyfsmultiloader.mixins.json into net.minecraft.client.gui.screens.TitleScreen
-[19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) nyfsmultiloader.mixins.json:ExampleMixin from mod nyfsmultiloader->@Inject::init(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V doesn't use it's CallbackInfo
-[19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) nyfsmultiloader.mixins.json:ExampleMixin from mod nyfsmultiloader->@Inject::init(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V has 0 override(s) in child classes
-[19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) nyfsmultiloader.mixins.json:ExampleMixin from mod nyfsmultiloader->@Inject::init(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V won't be passed a CallbackInfo as a result
+[19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) Mixing ExampleMixin from waterballoon.mixins.json into net.minecraft.client.gui.screens.TitleScreen
+[19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) waterballoon.mixins.json:ExampleMixin from mod waterballoon->@Inject::init(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V doesn't use it's CallbackInfo
+[19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) waterballoon.mixins.json:ExampleMixin from mod waterballoon->@Inject::init(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V has 0 override(s) in child classes
+[19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) waterballoon.mixins.json:ExampleMixin from mod waterballoon->@Inject::init(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V won't be passed a CallbackInfo as a result
 [19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) Mixing SinglePreparationResourceReloaderMixin from fabric-resource-conditions-api-v1.mixins.json into net.minecraft.server.packs.resources.SimplePreparableReloadListener
 [19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) fabric-resource-conditions-api-v1.mixins.json:SinglePreparationResourceReloaderMixin from mod fabric-resource-conditions-api-v1: Class version 61 required is higher than the class version supported by the current version of Mixin (JAVA_16 supports class version 60)
 [19:41:26] [Render thread/DEBUG] (FabricLoader/Mixin) fabric-resource-conditions-api-v1.mixins.json:SinglePreparationResourceReloaderMixin from mod fabric-resource-conditions-api-v1->@Inject::applyResourceConditions(Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;Ljava/lang/Object;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V doesn't use it's CallbackInfo

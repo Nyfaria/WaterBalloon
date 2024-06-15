@@ -1,4 +1,4 @@
-[22May2024 19:39:19.011] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeclientuserdev, --version, MOD_DEV, --assetIndex, 5, --assetsDir, C:\Users\kinar\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.1.3, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mixin.config, nyfsmultiloader.mixins.json]
+[22May2024 19:39:19.011] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeclientuserdev, --version, MOD_DEV, --assetIndex, 5, --assetsDir, C:\Users\kinar\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.1.3, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mixin.config, waterballoon.mixins.json]
 [22May2024 19:39:19.014] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.9 by JetBrains s.r.o.; OS Windows 11 arch amd64 version 10.0
 [22May2024 19:39:19.042] [main/DEBUG] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Found launch services [fmlclientdev,forgeclient,minecraft,forgegametestserverdev,fmlserveruserdev,fmlclient,fmldatauserdev,forgeserverdev,forgeserveruserdev,forgeclientdev,forgeclientuserdev,forgeserver,forgedatadev,fmlserver,fmlclientuserdev,fmlserverdev,forgedatauserdev,testharness,forgegametestserveruserdev]
 [22May2024 19:39:19.058] [main/DEBUG] [cpw.mods.modlauncher.NameMappingServiceHandler/MODLAUNCHER]: Found naming services : [srgtomcp]
@@ -77,7 +77,7 @@
 [22May2024 19:39:20.110] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Considering mod file candidate C:\Users\kinar\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.1.3\1aadc0201d8e97b107d9978c7fe066bb54bbb9dc\fmlcore-1.20.1-47.1.3.jar
 [22May2024 19:39:20.110] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\kinar\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.1.3\1aadc0201d8e97b107d9978c7fe066bb54bbb9dc\fmlcore-1.20.1-47.1.3.jar is missing mods.toml file
 [22May2024 19:39:20.114] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Considering mod file candidate D:\MinecraftModding\NyfsMultiLoader-Template\Forge\build\resources\main
-[22May2024 19:39:20.120] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileInfo/LOADING]: Found valid mod file main with {nyfsmultiloader} mods - versions {1.0.0}
+[22May2024 19:39:20.120] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileInfo/LOADING]: Found valid mod file main with {waterballoon} mods - versions {1.0.0}
 [22May2024 19:39:20.122] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Considering mod file candidate /
 [22May2024 19:39:20.125] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileInfo/LOADING]: Found valid mod file  with {forge} mods - versions {47.1.3}
 [22May2024 19:39:20.141] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Considering mod file candidate C:\Users\kinar\.gradle\caches\modules-2\files-2.1\io.github.llamalad7\mixinextras-forge\0.2.0-rc.3\4941f4d7412e24b31e9dcba391ab9cdb33d2f0c3\mixinextras-forge-0.2.0-rc.3.jar
@@ -110,7 +110,7 @@
 [22May2024 19:39:20.254] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFile/LOADING]: Found coremod coremods/add_bouncer_method.js
 [22May2024 19:39:20.254] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFile/LOADING]: Found coremod coremods/method_redirector.js
 [22May2024 19:39:20.254] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Considering mod file candidate D:\MinecraftModding\NyfsMultiLoader-Template\Forge\build\resources\main
-[22May2024 19:39:20.256] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileInfo/LOADING]: Found valid mod file main with {nyfsmultiloader} mods - versions {1.0.0}
+[22May2024 19:39:20.256] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileInfo/LOADING]: Found valid mod file main with {waterballoon} mods - versions {1.0.0}
 [22May2024 19:39:20.256] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFile/LOADING]: Loading mod file D:\MinecraftModding\NyfsMultiLoader-Template\Forge\build\resources\main with languages [LanguageSpec[languageName=javafml, acceptedVersions=[47,)]]
 [22May2024 19:39:20.257] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Considering mod file candidate C:\Users\kinar\.gradle\caches\modules-2\files-2.1\io.github.llamalad7\mixinextras-forge\0.2.0-rc.3\4941f4d7412e24b31e9dcba391ab9cdb33d2f0c3\mixinextras-forge-0.2.0-rc.3.jar
 [22May2024 19:39:20.257] [main/DEBUG] [net.minecraftforge.fml.loading.moddiscovery.ModFileInfo/LOADING]: Found valid mod file mixinextras-forge-0.2.0-rc.3.jar with {mixinextras} mods - versions {0.2.0-rc.3}
@@ -175,8 +175,8 @@
 [22May2024 19:39:21.061] [main/DEBUG] [cpw.mods.modlauncher.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@56c8e6f0 to Target : CLASS {Lnet/minecraft/world/entity/npc/Villager;} {} {V}
 [22May2024 19:39:21.061] [main/DEBUG] [cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]: Initialized transformers for transformation service fml
 [22May2024 19:39:21.287] [main/DEBUG] [mixin/]: Processing prepare() for PlatformAgent[MixinPlatformAgentDefault:ModLauncher Root Container(ModLauncher:4f56a0a2)]
-[22May2024 19:39:21.287] [main/DEBUG] [mixin/]: Registering mixin config: nyfsmultiloader.mixins.json
-[22May2024 19:39:21.301] [main/DEBUG] [mixin/]: Compatibility level JAVA_17 specified by nyfsmultiloader.mixins.json is higher than the maximum level supported by this version of mixin (JAVA_13).
+[22May2024 19:39:21.287] [main/DEBUG] [mixin/]: Registering mixin config: waterballoon.mixins.json
+[22May2024 19:39:21.301] [main/DEBUG] [mixin/]: Compatibility level JAVA_17 specified by waterballoon.mixins.json is higher than the maximum level supported by this version of mixin (JAVA_13).
 [22May2024 19:39:21.301] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
 [22May2024 19:39:21.302] [main/DEBUG] [mixin/]: Processing launch tasks for PlatformAgent[MixinPlatformAgentDefault:ModLauncher Root Container(ModLauncher:4f56a0a2)]
 [22May2024 19:39:21.302] [main/DEBUG] [mixin/]: Adding mixin platform agents for container SecureJarResource(minecraft)
@@ -191,12 +191,12 @@
 [22May2024 19:39:21.302] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentDefault for SecureJarResource(forge)
 [22May2024 19:39:21.303] [main/DEBUG] [mixin/]: MixinPlatformAgentDefault accepted container SecureJarResource(forge)
 [22May2024 19:39:21.303] [main/DEBUG] [mixin/]: Processing prepare() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(forge)]
-[22May2024 19:39:21.303] [main/DEBUG] [mixin/]: Adding mixin platform agents for container SecureJarResource(nyfsmultiloader)
-[22May2024 19:39:21.303] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentMinecraftForge for SecureJarResource(nyfsmultiloader)
-[22May2024 19:39:21.303] [main/DEBUG] [mixin/]: MixinPlatformAgentMinecraftForge rejected container SecureJarResource(nyfsmultiloader)
-[22May2024 19:39:21.303] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentDefault for SecureJarResource(nyfsmultiloader)
-[22May2024 19:39:21.303] [main/DEBUG] [mixin/]: MixinPlatformAgentDefault accepted container SecureJarResource(nyfsmultiloader)
-[22May2024 19:39:21.303] [main/DEBUG] [mixin/]: Processing prepare() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(nyfsmultiloader)]
+[22May2024 19:39:21.303] [main/DEBUG] [mixin/]: Adding mixin platform agents for container SecureJarResource(waterballoon)
+[22May2024 19:39:21.303] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentMinecraftForge for SecureJarResource(waterballoon)
+[22May2024 19:39:21.303] [main/DEBUG] [mixin/]: MixinPlatformAgentMinecraftForge rejected container SecureJarResource(waterballoon)
+[22May2024 19:39:21.303] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentDefault for SecureJarResource(waterballoon)
+[22May2024 19:39:21.303] [main/DEBUG] [mixin/]: MixinPlatformAgentDefault accepted container SecureJarResource(waterballoon)
+[22May2024 19:39:21.303] [main/DEBUG] [mixin/]: Processing prepare() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(waterballoon)]
 [22May2024 19:39:21.303] [main/DEBUG] [mixin/]: Adding mixin platform agents for container SecureJarResource(mixinextras)
 [22May2024 19:39:21.303] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentMinecraftForge for SecureJarResource(mixinextras)
 [22May2024 19:39:21.303] [main/DEBUG] [mixin/]: MixinPlatformAgentMinecraftForge rejected container SecureJarResource(mixinextras)
@@ -220,7 +220,7 @@
 [22May2024 19:39:21.306] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:ModLauncher Root Container(ModLauncher:4f56a0a2)]
 [22May2024 19:39:21.306] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(minecraft)]
 [22May2024 19:39:21.306] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(forge)]
-[22May2024 19:39:21.306] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(nyfsmultiloader)]
+[22May2024 19:39:21.306] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(waterballoon)]
 [22May2024 19:39:21.306] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(mixinextras)]
 [22May2024 19:39:21.306] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(regutils.joined.forge)]
 [22May2024 19:39:21.306] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(MixinExtras.rc._3)]
@@ -229,8 +229,8 @@
 [22May2024 19:39:21.412] [main/INFO] [mixin/]: Fernflower could not be loaded, exported classes will not be decompiled. NoClassDefFoundError: org/jetbrains/java/decompiler/main/extern/IResultSaver
 [22May2024 19:39:21.414] [main/DEBUG] [mixin/]: Error cleaning class output directory: .mixin.out
 [22May2024 19:39:21.416] [main/DEBUG] [mixin/]: Preparing mixins for MixinEnvironment[DEFAULT]
-[22May2024 19:39:21.417] [main/DEBUG] [mixin/]: Selecting config nyfsmultiloader.mixins.json
-[22May2024 19:39:21.421] [main/WARN] [mixin/]: Reference map '${mod_id}.refmap.json' for nyfsmultiloader.mixins.json could not be read. If this is a development environment you can ignore this message
+[22May2024 19:39:21.417] [main/DEBUG] [mixin/]: Selecting config waterballoon.mixins.json
+[22May2024 19:39:21.421] [main/WARN] [mixin/]: Reference map '${mod_id}.refmap.json' for waterballoon.mixins.json could not be read. If this is a development environment you can ignore this message
 [22May2024 19:39:21.422] [main/DEBUG] [mixin/]: Selecting config mixinextras.init.mixins.json
 [22May2024 19:39:21.459] [main/DEBUG] [MixinExtras|Service/]: com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.2.0-rc.3) is taking over from null
 [22May2024 19:39:21.494] [main/DEBUG] [mixin/]: Registering new injector for @Inject with org.spongepowered.asm.mixin.injection.struct.CallbackInjectionInfo
@@ -239,7 +239,7 @@
 [22May2024 19:39:21.499] [main/DEBUG] [mixin/]: Registering new injector for @Redirect with org.spongepowered.asm.mixin.injection.struct.RedirectInjectionInfo
 [22May2024 19:39:21.501] [main/DEBUG] [mixin/]: Registering new injector for @ModifyVariable with org.spongepowered.asm.mixin.injection.struct.ModifyVariableInjectionInfo
 [22May2024 19:39:21.502] [main/DEBUG] [mixin/]: Registering new injector for @ModifyConstant with org.spongepowered.asm.mixin.injection.struct.ModifyConstantInjectionInfo
-[22May2024 19:39:21.515] [main/DEBUG] [mixin/]: Preparing nyfsmultiloader.mixins.json (1)
+[22May2024 19:39:21.515] [main/DEBUG] [mixin/]: Preparing waterballoon.mixins.json (1)
 [22May2024 19:39:21.542] [main/DEBUG] [mixin/]: Preparing mixinextras.init.mixins.json (0)
 [22May2024 19:39:21.798] [main/DEBUG] [io.netty.util.internal.logging.InternalLoggerFactory/]: Using SLF4J as the default logging framework
 [22May2024 19:39:21.800] [main/DEBUG] [io.netty.util.ResourceLeakDetector/]: -Dio.netty.leakDetection.level: simple
@@ -269,7 +269,7 @@
 [22May2024 19:39:25.188] [pool-4-thread-1/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/levelgen/structure/structures/WoodlandMansionPieces$WoodlandMansionPiece
 [22May2024 19:39:25.267] [pool-4-thread-1/DEBUG] [net.minecraftforge.coremod.transformer.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/biome/Biome
 [22May2024 19:39:25.577] [Render thread/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.2.0-rc.3).
-[22May2024 19:39:25.580] [Render thread/DEBUG] [mixin/]: Mixing ExampleMixin from nyfsmultiloader.mixins.json into net.minecraft.client.gui.screens.TitleScreen
+[22May2024 19:39:25.580] [Render thread/DEBUG] [mixin/]: Mixing ExampleMixin from waterballoon.mixins.json into net.minecraft.client.gui.screens.TitleScreen
 [22May2024 19:39:25.737] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/kinar/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.1.3_mapped_parchment_2023.07.16-1.20.1/forge-1.20.1-47.1.3_mapped_parchment_2023.07.16-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
 [22May2024 19:39:25.737] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/kinar/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.1.3_mapped_parchment_2023.07.16-1.20.1/forge-1.20.1-47.1.3_mapped_parchment_2023.07.16-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
 [22May2024 19:39:25.755] [Render thread/INFO] [com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService/]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
@@ -282,7 +282,7 @@
 [22May2024 19:39:25.995] [Render thread/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLJavaModLanguageProvider/LOADING]: Loading FMLModContainer from classloader cpw.mods.modlauncher.TransformingClassLoader@5f34907b - got cpw.mods.cl.ModuleClassLoader@4beeb0e
 [22May2024 19:39:25.995] [Render thread/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLModContainer/LOADING]: Creating FMLModContainer instance for net.minecraftforge.common.ForgeMod
 [22May2024 19:39:25.997] [Render thread/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLJavaModLanguageProvider/LOADING]: Loading FMLModContainer from classloader cpw.mods.modlauncher.TransformingClassLoader@5f34907b - got cpw.mods.cl.ModuleClassLoader@4beeb0e
-[22May2024 19:39:25.997] [Render thread/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLModContainer/LOADING]: Creating FMLModContainer instance for com.nyfaria.nyfsmultiloader.ExampleMod
+[22May2024 19:39:25.997] [Render thread/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLModContainer/LOADING]: Creating FMLModContainer instance for com.nyfaria.waterballoon.WaterBalloon
 [22May2024 19:39:26.008] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Attempting to inject @EventBusSubscriber classes into the eventbus for mixinextras
 [22May2024 19:39:26.010] [modloading-worker-0/INFO] [Multi Loader Template/]: Hello Forge world!
 [22May2024 19:39:26.027] [modloading-worker-0/DEBUG] [net.minecraftforge.versions.forge.ForgeVersion/CORE]: Forge Version package package net.minecraftforge.versions.forge, Forge, version 47.1 from cpw.mods.modlauncher.TransformingClassLoader@5f34907b
@@ -294,8 +294,8 @@
 [22May2024 19:39:26.029] [modloading-worker-0/DEBUG] [net.minecraftforge.versions.mcp.MCPVersion/CORE]: Found MCP version information 20230612.114412
 [22May2024 19:39:26.029] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.1.3, for MC 1.20.1 with MCP 20230612.114412
 [22May2024 19:39:26.031] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.1.3 Initialized
-[22May2024 19:39:26.037] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Attempting to inject @EventBusSubscriber classes into the eventbus for nyfsmultiloader
-[22May2024 19:39:26.041] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.nyfaria.nyfsmultiloader.ExampleMod to MOD
+[22May2024 19:39:26.037] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Attempting to inject @EventBusSubscriber classes into the eventbus for waterballoon
+[22May2024 19:39:26.041] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.nyfaria.waterballoon.WaterBalloon to MOD
 [22May2024 19:39:26.080] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent0/]: -Dio.netty.noUnsafe: false
 [22May2024 19:39:26.085] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent0/]: Java version: 17
 [22May2024 19:39:26.085] [modloading-worker-0/DEBUG] [io.netty.util.internal.PlatformDependent0/]: sun.misc.Unsafe.theUnsafe: available
@@ -385,7 +385,7 @@ java.lang.IllegalAccessException: class io.netty.util.internal.PlatformDependent
 [22May2024 19:39:26.236] [Render thread/DEBUG] [net.minecraftforge.common.capabilities.CapabilityManager/CAPABILITIES]: Attempting to automatically register: Lnet/minecraftforge/items/IItemHandler;
 [22May2024 19:39:26.394] [Render thread/DEBUG] [net.minecraftforge.client.loading.ClientModLoader/CORE]: Generating PackInfo named mod:mixinextras for mod file C:\Users\kinar\.gradle\caches\modules-2\files-2.1\io.github.llamalad7\mixinextras-forge\0.2.0-rc.3\4941f4d7412e24b31e9dcba391ab9cdb33d2f0c3\mixinextras-forge-0.2.0-rc.3.jar
 [22May2024 19:39:26.395] [Render thread/DEBUG] [net.minecraftforge.client.loading.ClientModLoader/CORE]: Generating PackInfo named mod:forge for mod file /
-[22May2024 19:39:26.396] [Render thread/DEBUG] [net.minecraftforge.client.loading.ClientModLoader/CORE]: Generating PackInfo named mod:nyfsmultiloader for mod file D:\MinecraftModding\NyfsMultiLoader-Template\Forge\build\resources\main
+[22May2024 19:39:26.396] [Render thread/DEBUG] [net.minecraftforge.client.loading.ClientModLoader/CORE]: Generating PackInfo named mod:waterballoon for mod file D:\MinecraftModding\NyfsMultiLoader-Template\Forge\build\resources\main
 [22May2024 19:39:26.845] [Render thread/INFO] [net.minecraftforge.gametest.ForgeGameTestHooks/]: Enabled Gametest Namespaces: []
 [22May2024 19:39:26.950] [Render thread/INFO] [net.minecraft.server.packs.resources.ReloadableResourceManager/]: Reloading ResourceManager: vanilla, mod_resources
 [22May2024 19:39:26.963] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.config.ConfigTracker/CONFIG]: Loading configs type CLIENT
