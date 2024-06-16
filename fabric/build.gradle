@@ -2,7 +2,6 @@ plugins {
     id 'multiloader-loader'
     id 'fabric-loom' version '1.6-SNAPSHOT'
     id "me.modmuss50.mod-publish-plugin" version "0.5.1"
-    id 'com.matyrobbrt.mc.registrationutils' version "${regutils_version}"
 }
 
 
@@ -15,6 +14,10 @@ dependencies {
     }
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+}
+
+processResources {
+    from project(":common").file('src/generated/resources').getAbsolutePath()
 }
 
 loom {

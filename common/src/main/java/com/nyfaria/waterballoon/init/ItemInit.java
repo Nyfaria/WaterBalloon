@@ -1,13 +1,19 @@
 package com.nyfaria.waterballoon.init;
 
 import com.nyfaria.waterballoon.Constants;
+import com.nyfaria.waterballoon.item.BalloonItem;
+import com.nyfaria.waterballoon.item.BazookaItem;
+import com.nyfaria.waterballoon.item.SlingShotItem;
 import com.nyfaria.waterballoon.registration.RegistrationProvider;
 import com.nyfaria.waterballoon.registration.RegistryObject;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.block.Blocks;
 
 public class ItemInit {
@@ -22,6 +28,9 @@ public class ItemInit {
                     }).title(Component.translatable("itemGroup." + Constants.MODID + ".tab"))
             .build());
 
+    public static final RegistryObject<Item, BalloonItem> WATER_BALLOON = ITEMS.register("water_balloon", () -> new BalloonItem(getItemProperties().component(DataComponents.DYED_COLOR, new DyedItemColor(-1, true))));
+    public static final RegistryObject<Item, BazookaItem> BAZOOKA = ITEMS.register("balloon_bazooka", () -> new BazookaItem(getItemProperties()));
+    public static final RegistryObject<Item, SlingShotItem> SLING_SHOT = ITEMS.register("slingshot", () -> new SlingShotItem(getItemProperties().component(DataComponents.DYED_COLOR, new DyedItemColor(-1, true))));
 
     public static Item.Properties getItemProperties() {
         return new Item.Properties();

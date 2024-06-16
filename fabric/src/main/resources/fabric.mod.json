@@ -17,6 +17,9 @@
     "entrypoints": {
         "main": [
             "com.nyfaria.waterballoon.WaterBalloon"
+        ],
+        "client": [
+            "com.nyfaria.waterballoon.WaterBalloonClient"
         ]
     },
     "mixins": [

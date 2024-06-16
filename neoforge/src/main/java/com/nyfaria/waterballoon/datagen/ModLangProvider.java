@@ -2,7 +2,6 @@ package com.nyfaria.waterballoon.datagen;
 
 import com.google.common.collect.ImmutableMap;
 import com.nyfaria.waterballoon.Constants;
-import com.nyfaria.waterballoon.init.BlockInit;
 import com.nyfaria.waterballoon.init.EntityInit;
 import com.nyfaria.waterballoon.init.ItemInit;
 import com.nyfaria.waterballoon.registration.RegistryObject;
@@ -33,8 +32,7 @@ public class ModLangProvider extends LanguageProvider {
     protected void addTranslations() {
         ItemInit.ITEMS.getEntries().forEach(this::itemLang);
         EntityInit.ENTITIES.getEntries().forEach(this::entityLang);
-        BlockInit.BLOCKS.getEntries().forEach(this::blockLang);
-        add("itemGroup.hundredMediaTab", "100 Media");
+        add("itemGroup." + Constants.MODID + ".tab", Constants.MOD_NAME);
     }
 
     protected void itemLang(RegistryObject<Item,?> entry) {

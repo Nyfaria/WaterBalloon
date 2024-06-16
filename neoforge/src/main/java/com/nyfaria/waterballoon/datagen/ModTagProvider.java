@@ -1,11 +1,13 @@
 package com.nyfaria.waterballoon.datagen;
 
 import com.nyfaria.waterballoon.Constants;
+import com.nyfaria.waterballoon.init.ItemInit;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -25,7 +27,9 @@ public class ModTagProvider {
 
         @Override
         protected void addTags(HolderLookup.Provider pProvider) {
-
+            populateTag(ItemTags.DYEABLE,
+                    ItemInit.WATER_BALLOON::get,
+                    ItemInit.SLING_SHOT::get);
         }
 
         public void populateTag(TagKey<Item> tag, Supplier<Item>... items){

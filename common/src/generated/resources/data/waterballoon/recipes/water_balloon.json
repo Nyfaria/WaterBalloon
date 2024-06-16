@@ -1,0 +1,27 @@
+{
+  "type": "waterballoon:balloon",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:paper"
+    },
+    "B": {
+      "item": "minecraft:water_bucket"
+    },
+    "D": {
+      "tag": "c:dyes"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "#D#",
+    "#B#",
+    "#S#"
+  ],
+  "result": {
+    "count": 16,
+    "id": "waterballoon:water_balloon"
+  }
+}

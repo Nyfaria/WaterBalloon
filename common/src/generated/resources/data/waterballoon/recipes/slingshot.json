@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:string"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "SDS",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "waterballoon:slingshot"
+  }
+}

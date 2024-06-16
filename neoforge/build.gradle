@@ -2,7 +2,6 @@ plugins {
     id 'multiloader-loader'
     id 'net.neoforged.gradle.userdev' version '7.0.139'
     id "me.modmuss50.mod-publish-plugin" version "0.5.1"
-    id 'com.matyrobbrt.mc.registrationutils' version "${regutils_version}"
 }
 
 
@@ -34,7 +33,9 @@ runs {
     }
 }
 
-sourceSets.main.resources { srcDir project(":common").file('src/generated/resources').getAbsolutePath() }
+sourceSets.main.resources {
+    srcDir project(":common").file('src/generated/resources').getAbsolutePath()
+}
 
 dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
