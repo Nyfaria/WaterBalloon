@@ -18,7 +18,7 @@ public class ModRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> recipeSaver) {
-        BalloonRecipeBuilder.shaped(RecipeCategory.MISC,ItemInit.WATER_BALLOON.get(), 16)
+        BalloonRecipeBuilder.balloon(RecipeCategory.MISC,ItemInit.WATER_BALLOON.get(), 16)
                 .pattern("#D#")
                 .pattern("#B#")
                 .pattern("#S#")

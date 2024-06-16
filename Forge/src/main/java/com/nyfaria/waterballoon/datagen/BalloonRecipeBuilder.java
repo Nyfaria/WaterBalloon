@@ -5,31 +5,30 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
-import javax.annotation.Nullable;
-
 import com.nyfaria.waterballoon.init.RecipeInit;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.CraftingRecipeBuilder;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Consumer;
 
 public class BalloonRecipeBuilder extends CraftingRecipeBuilder implements RecipeBuilder {
    private final RecipeCategory category;
@@ -37,10 +36,10 @@ public class BalloonRecipeBuilder extends CraftingRecipeBuilder implements Recip
    private final int count;
    private final List<String> rows = Lists.newArrayList();
    private final Map<Character, Ingredient> key = Maps.newLinkedHashMap();
-   private final Advancement.Builder advancement = Advancement.Builder.advancement();
-   private boolean showNotification = true;
+   private final Advancement.Builder advancement = Advancement.Builder.recipeAdvancement();
    @Nullable
    private String group;
+   private boolean showNotification = true;
 
    public BalloonRecipeBuilder(RecipeCategory pCategory, ItemLike pResult, int pCount) {
       this.category = pCategory;
@@ -49,16 +48,16 @@ public class BalloonRecipeBuilder extends CraftingRecipeBuilder implements Recip
    }
 
    /**
-    * Creates a new builder for a shaped recipe.
+    * Creates a new builder for a balloon recipe.
     */
-   public static BalloonRecipeBuilder shaped(RecipeCategory pCategory, ItemLike pResult) {
-      return shaped(pCategory, pResult, 1);
+   public static BalloonRecipeBuilder balloon(RecipeCategory pCategory, ItemLike pResult) {
+      return balloon(pCategory, pResult, 1);
    }
 
    /**
-    * Creates a new builder for a shaped recipe.
+    * Creates a new builder for a balloon recipe.
     */
-   public static BalloonRecipeBuilder shaped(RecipeCategory pCategory, ItemLike pResult, int pCount) {
+   public static BalloonRecipeBuilder balloon(RecipeCategory pCategory, ItemLike pResult, int pCount) {
       return new BalloonRecipeBuilder(pCategory, pResult, pCount);
    }
 
@@ -112,6 +111,11 @@ public class BalloonRecipeBuilder extends CraftingRecipeBuilder implements Recip
       return this;
    }
 
+   public BalloonRecipeBuilder showNotification(boolean pShowNotification) {
+      this.showNotification = pShowNotification;
+      return this;
+   }
+
    public Item getResult() {
       return this.result;
    }
@@ -119,18 +123,15 @@ public class BalloonRecipeBuilder extends CraftingRecipeBuilder implements Recip
    public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ResourceLocation pRecipeId) {
       this.ensureValid(pRecipeId);
       this.advancement.parent(ROOT_RECIPE_ADVANCEMENT).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(RequirementsStrategy.OR);
-      pFinishedRecipeConsumer.accept(new ShapedRecipeBuilder.Result(pRecipeId, this.result, this.count, this.group == null ? "" : this.group, determineBookCategory(this.category), this.rows, this.key, this.advancement, pRecipeId.withPrefix("recipes/" + this.category.getFolderName() + "/"), this.showNotification));
+      pFinishedRecipeConsumer.accept(new BalloonRecipeBuilder.Result(pRecipeId, this.result, this.count, this.group == null ? "" : this.group, determineBookCategory(this.category), this.rows, this.key, this.advancement, pRecipeId.withPrefix("recipes/" + this.category.getFolderName() + "/"), this.showNotification));
    }
-   public BalloonRecipeBuilder showNotification(boolean pShowNotification) {
-      this.showNotification = pShowNotification;
-      return this;
-   }
+
    /**
     * Makes sure that this recipe is valid and obtainable.
     */
    private void ensureValid(ResourceLocation pId) {
       if (this.rows.isEmpty()) {
-         throw new IllegalStateException("No pattern is defined for shaped recipe " + pId + "!");
+         throw new IllegalStateException("No pattern is defined for balloon recipe " + pId + "!");
       } else {
          Set<Character> set = Sets.newHashSet(this.key.keySet());
          set.remove(' ');
@@ -149,14 +150,14 @@ public class BalloonRecipeBuilder extends CraftingRecipeBuilder implements Recip
          if (!set.isEmpty()) {
             throw new IllegalStateException("Ingredients are defined but not used in pattern for recipe " + pId);
          } else if (this.rows.size() == 1 && this.rows.get(0).length() == 1) {
-            throw new IllegalStateException("Shaped recipe " + pId + " only takes in a single item - should it be a shapeless recipe instead?");
+            throw new IllegalStateException("Balloon recipe " + pId + " only takes in a single item - should it be a shapeless recipe instead?");
          } else if (this.advancement.getCriteria().isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + pId);
          }
       }
    }
 
-   public static class Result implements FinishedRecipe {
+   static class Result extends CraftingRecipeBuilder.CraftingResult {
       private final ResourceLocation id;
       private final Item result;
       private final int count;
@@ -165,8 +166,10 @@ public class BalloonRecipeBuilder extends CraftingRecipeBuilder implements Recip
       private final Map<Character, Ingredient> key;
       private final Advancement.Builder advancement;
       private final ResourceLocation advancementId;
+      private final boolean showNotification;
 
-      public Result(ResourceLocation pId, Item pResult, int pCount, String pGroup, List<String> pPattern, Map<Character, Ingredient> pKey, Advancement.Builder pAdvancement, ResourceLocation pAdvancementId) {
+      public Result(ResourceLocation pId, Item pResult, int pCount, String pGroup, CraftingBookCategory pCategory, List<String> pPattern, Map<Character, Ingredient> pKey, Advancement.Builder pAdvancement, ResourceLocation pAdvancementId, boolean pShowNotification) {
+         super(pCategory);
          this.id = pId;
          this.result = pResult;
          this.count = pCount;
@@ -175,9 +178,11 @@ public class BalloonRecipeBuilder extends CraftingRecipeBuilder implements Recip
          this.key = pKey;
          this.advancement = pAdvancement;
          this.advancementId = pAdvancementId;
+         this.showNotification = pShowNotification;
       }
 
       public void serializeRecipeData(JsonObject pJson) {
+         super.serializeRecipeData(pJson);
          if (!this.group.isEmpty()) {
             pJson.addProperty("group", this.group);
          }
@@ -203,6 +208,7 @@ public class BalloonRecipeBuilder extends CraftingRecipeBuilder implements Recip
          }
 
          pJson.add("result", jsonobject1);
+         pJson.addProperty("show_notification", this.showNotification);
       }
 
       public RecipeSerializer<?> getType() {
@@ -216,10 +222,14 @@ public class BalloonRecipeBuilder extends CraftingRecipeBuilder implements Recip
          return this.id;
       }
 
+      /**
+       * Gets the JSON for the advancement that unlocks this recipe. Null if there is no advancement.
+       */
       @Nullable
       public JsonObject serializeAdvancement() {
          return this.advancement.serializeToJson();
       }
+
 
       @Nullable
       public ResourceLocation getAdvancementId() {

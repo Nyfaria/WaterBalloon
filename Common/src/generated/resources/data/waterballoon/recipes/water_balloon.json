@@ -1,5 +1,6 @@
 {
   "type": "waterballoon:balloon",
+  "category": "misc",
   "key": {
     "#": {
       "item": "minecraft:paper"
@@ -22,5 +23,6 @@
   "result": {
     "count": 16,
     "item": "waterballoon:water_balloon"
-  }
+  },
+  "show_notification": true
 }

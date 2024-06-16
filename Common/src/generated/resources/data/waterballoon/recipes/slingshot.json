@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "D": {
       "item": "minecraft:string"
@@ -15,5 +16,6 @@
   ],
   "result": {
     "item": "waterballoon:slingshot"
-  }
+  },
+  "show_notification": true
 }

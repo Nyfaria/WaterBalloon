@@ -170,9 +170,9 @@ publishMods {
     }
 //    discord {
 //        webhookUrl = spider_news
-//        username = "Spider News"
+//        username = "Balloon News"
 //        avatarUrl = "https://media.forgecdn.net/avatars/618/872/638005062440412823.png"
-//        content = changelog.map { "@<> # A new version Nyf's Spiders has been released! \n" + it}
+//        content = changelog.map { "# A new version Nyf's Spiders has been released! \n" + it}
 //    }
 }
 

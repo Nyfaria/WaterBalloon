@@ -2,6 +2,7 @@ package com.nyfaria.waterballoon;
 
 import com.nyfaria.waterballoon.datagen.ModBlockStateProvider;
 import com.nyfaria.waterballoon.datagen.ModItemModelProvider;
+import com.nyfaria.waterballoon.datagen.ModLangProvider;
 import com.nyfaria.waterballoon.datagen.ModLootTableProvider;
 import com.nyfaria.waterballoon.datagen.ModRecipeProvider;
 import com.nyfaria.waterballoon.datagen.ModSoundProvider;
@@ -36,5 +37,6 @@ public class WaterBalloon {
         generator.addProvider(includeServer, new ModTagProvider.Items(packOutput,event.getLookupProvider(), existingFileHelper));
         generator.addProvider(includeClient, new ModBlockStateProvider(packOutput, existingFileHelper));
         generator.addProvider(includeClient, new ModItemModelProvider(packOutput, existingFileHelper));
+        generator.addProvider(includeClient, new ModLangProvider(packOutput));
     }
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "waterballoon:water_balloon"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }
