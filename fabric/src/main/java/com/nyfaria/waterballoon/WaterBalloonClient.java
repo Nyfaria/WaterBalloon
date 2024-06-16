@@ -44,16 +44,15 @@ public class WaterBalloonClient implements ClientModInitializer {
             int argb = (int) (a * 255) << 24 | (int) (r * 255) << 16 | (int) (g * 255) << 8 | (int) (b * 255);
             return argb;
         }, ItemInit.WATER_BALLOON.get(), ItemInit.SLING_SHOT.get());
-        ItemProperties.register(ItemInit.SLING_SHOT.get(), new ResourceLocation("pulling"),
+        ItemProperties.register(ItemInit.SLING_SHOT.get(), ResourceLocation.withDefaultNamespace("pulling"),
                 (stack, world, entity, i) -> {
                     if (entity == null) {
                         return 0.0F;
                     } else {
-                        return entity.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration() - entity.getUseItemRemainingTicks()) / 20.0F;
+                        return entity.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration(player) - entity.getUseItemRemainingTicks()) / 20.0F;
                     }
                 });
-        Codec.xor()
-        ItemProperties.register(ItemInit.SLING_SHOT.get(), new ResourceLocation("pull"),
+        ItemProperties.register(ItemInit.SLING_SHOT.get(), ResourceLocation.withDefaultNamespace("pull"),
                 (stack, world, entity, i) -> {
                     if (entity == null) {
                         return 0.0F;
