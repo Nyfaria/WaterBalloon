@@ -3,8 +3,6 @@ package com.nyfaria.waterballoon.entity;
 import com.nyfaria.waterballoon.init.EntityInit;
 import com.nyfaria.waterballoon.init.ItemInit;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -58,8 +56,6 @@ public class ThrownBalloon extends ThrowableItemProjectile {
     protected void onHitBlock(BlockHitResult $$0) {
         if(!level.isClientSide){
             AreaEffectCloud cloud = new AreaEffectCloud(level, getX(), getY(), getZ());
-            LivingEntity owner = this.getOwner();
-
             cloud.setRadius(2.0F);
             cloud.setDuration(20);
             cloud.setParticle(ParticleTypes.SPLASH);
@@ -70,7 +66,6 @@ public class ThrownBalloon extends ThrowableItemProjectile {
             cloud.setPotion(Potions.SLOWNESS);
             level.addFreshEntity(cloud);
 
-            level.playSound(null, owner.getX(), owner.getY(), owner.getZ(), SoundEvents.PLAYER_SPLASH, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
         }
 
         super.onHitBlock($$0);
