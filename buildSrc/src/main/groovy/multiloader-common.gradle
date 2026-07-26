@@ -14,8 +14,6 @@ java {
 }
 
 repositories {
-    mavenCentral()
-    // https://docs.gradle.org/current/userguide/declaring_repositories.html#declaring_content_exclusively_found_in_one_repository
     exclusiveContent {
         forRepository {
             maven {
@@ -24,24 +22,13 @@ repositories {
             }
         }
         filter { includeGroupAndSubgroups("org.spongepowered") }
-
-    }
-    maven {
-        name = 'BlameJared'
-        url = 'https://maven.blamejared.com'
     }
     maven {
         name = "Fuzs Mod Resources"
         url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
     }
-    maven {
-        name = 'ParchmentMC'
-        url = 'https://maven.parchmentmc.org'
-    }
 }
 
-// Declare capabilities on the outgoing configurations.
-// Read more about capabilities here: https://docs.gradle.org/current/userguide/component_capabilities.html#sec:declaring-additional-capabilities-for-a-local-component
 ['apiElements', 'runtimeElements', 'sourcesElements', 'javadocElements'].each { variant ->
     configurations."$variant".outgoing {
         capability("$group:${base.archivesName.get()}:$version")
@@ -78,23 +65,31 @@ jar {
 }
 
 processResources {
+    def legacy = nyfs.versions.era.get() == "legacy"
+
     def expandProps = [
             "version"                      : version,
-            "group"                        : project.group, //Else we target the task's group.
+            "group"                        : project.group,
             "minecraft_version"            : minecraft_version,
-            "minecraft_version_range"      : minecraft_version_range,
-            "fabric_version"               : fabric_version,
-            "fabric_loader_version"        : fabric_loader_version,
+            "minecraft_version_range"      : nyfs.versions.minecraftVersionRange.get(),
+            "fabric_version"               : nyfs.versions.fabric.api.get(),
+            "fabric_loader_version"        : nyfs.versions.fabric.loader.get(),
             "mod_name"                     : mod_name,
             "mod_author"                   : mod_author,
             "mod_id"                       : mod_id,
             "license"                      : license,
             "description"                  : project.description,
-            "neoforge_version"             : neoforge_version,
-            "neoforge_loader_version_range": neoforge_loader_version_range,
             "credits"                      : credits,
             "java_version"                 : java_version
     ]
+
+    if (legacy) {
+        expandProps["forge_version"] = nyfs.versions.forgeVersion.get()
+        expandProps["forge_loader_version_range"] = nyfs.versions.forgeLoaderRange.get()
+    } else {
+        expandProps["neoforge_version"] = nyfs.versions.neoforgeVersion.get()
+        expandProps["neoforge_loader_version_range"] = nyfs.versions.neoforgeLoaderRange.get()
+    }
 
     filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {
         expand expandProps

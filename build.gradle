@@ -1,9 +1,12 @@
 plugins {
-    // Required for NeoGradle
     id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
-    id 'com.matyrobbrt.mc.registrationutils' version "${regutils_version}"
-    // The plugin is located at the Gradle plugin portal
+    alias(nyfs.plugins.loom) apply false
+    alias(nyfs.plugins.mdg) apply false
+    alias(nyfs.plugins.regutils)
 }
+
+def legacy = nyfs.versions.era.get() == "legacy"
+
 registrationUtils {
     group "com.nyfaria.${mod_id}.registration"
     projects {
@@ -11,7 +14,10 @@ registrationUtils {
             type 'fabric'
         }
         neoforge {
-            type 'neoforge'
+            type legacy ? 'forge' : 'neoforge'
+        }
+        datagen {
+            type legacy ? 'forge' : 'neoforge'
         }
         common {
             type 'common'

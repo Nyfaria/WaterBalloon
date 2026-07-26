@@ -1,25 +1,25 @@
 plugins {
     id 'multiloader-common'
-//    id 'net.neoforged.gradle.userdev' version '7.0.133'
-    id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    alias(nyfs.plugins.mdg.loader)
+    alias(nyfs.plugins.regutils.loader)
 }
 
-
-minecraft {
-    mappings channel: mappings_channel, version: mappings_version
-//    version(minecraft_version)
-    def aw = file('src/main/resources/META-INF/accesstransformer.cfg')
-    if(aw.exists()){
-        accessTransformer = aw
+neoForge {
+    neoFormVersion = nyfs.versions.neoFormVersion.get()
+    def at = file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) {
+        accessTransformers.from(at.absolutePath)
+    }
+    parchment {
+        minecraftVersion = nyfs.versions.parchmentMinecraft.get()
+        mappingsVersion = nyfs.versions.parchmentVersion.get()
     }
 }
-repositories {
-    maven { url "https://maven.fabricmc.net/" }
-}
+
 dependencies {
-    minecraft "net.minecraft:joined:${minecraft_version}"
-    compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
+    compileOnly(nyfs.bundles.mixin.common.get())
+    annotationProcessor nyfs.mixin.extras.common.get()
+    compileOnly nyfs.config.api.common.get()
 }
 
 configurations {
