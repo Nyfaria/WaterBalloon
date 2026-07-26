@@ -1,41 +1,30 @@
 package com.nyfaria.waterballoon.item;
 
-import com.google.common.collect.Lists;
-import com.nyfaria.waterballoon.entity.ThrownBalloon;
-import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ProjectileWeaponItem;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.component.ChargedProjectiles;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
+import com.google.common.collect.*;
+import com.nyfaria.waterballoon.entity.*;
+import net.minecraft.*;
+import net.minecraft.advancements.*;
+import net.minecraft.core.component.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.server.level.*;
+import net.minecraft.sounds.*;
+import net.minecraft.stats.*;
+import net.minecraft.util.*;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.*;
+import net.minecraft.world.entity.projectile.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.*;
+import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.level.*;
+import net.minecraft.world.phys.*;
+import org.jetbrains.annotations.*;
+import org.joml.*;
 
-import java.util.List;
-import java.util.function.Predicate;
+import java.lang.Math;
+import java.util.*;
+import java.util.function.*;
 
 public class BazookaItem extends ProjectileWeaponItem {
     private static final int MAX_CHARGE_DURATION = 25;
@@ -47,6 +36,7 @@ public class BazookaItem extends ProjectileWeaponItem {
     private static final float ARROW_POWER = 3.15F;
     private static final float FIREWORK_POWER = 1.6F;
     public static final float MOB_ARROW_POWER = 1.6F;
+    private static final CrossbowItem.ChargingSounds DEFAULT_SOUNDS = new CrossbowItem.ChargingSounds(Optional.of(SoundEvents.CROSSBOW_LOADING_START), Optional.of(SoundEvents.CROSSBOW_LOADING_MIDDLE), Optional.of(SoundEvents.CROSSBOW_LOADING_END));
 
     public BazookaItem(Item.Properties pProperties) {
         super(pProperties);
@@ -63,19 +53,19 @@ public class BazookaItem extends ProjectileWeaponItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
+    public InteractionResult use(Level pLevel, Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
         ChargedProjectiles chargedprojectiles = itemstack.get(DataComponents.CHARGED_PROJECTILES);
         if (chargedprojectiles != null && !chargedprojectiles.isEmpty()) {
             this.performShooting(pLevel, pPlayer, pHand, itemstack, getShootingPower(chargedprojectiles), 1.0F, null);
-            return InteractionResultHolder.consume(itemstack);
+            return InteractionResult.CONSUME;
         } else if (!pPlayer.getProjectile(itemstack).isEmpty()) {
             this.startSoundPlayed = false;
             this.midLoadSoundPlayed = false;
             pPlayer.startUsingItem(pHand);
-            return InteractionResultHolder.consume(itemstack);
+            return InteractionResult.CONSUME;
         } else {
-            return InteractionResultHolder.fail(itemstack);
+            return InteractionResult.FAIL;
         }
     }
 
@@ -84,27 +74,15 @@ public class BazookaItem extends ProjectileWeaponItem {
     }
 
     @Override
-    public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving, int pTimeLeft) {
-        int i = this.getUseDuration(pStack, pEntityLiving) - pTimeLeft;
-        float f = getPowerForTime(i, pStack);
-        if (f >= 1.0F && !isCharged(pStack) && tryLoadProjectiles(pEntityLiving, pStack)) {
-            pLevel.playSound(
-                    null,
-                    pEntityLiving.getX(),
-                    pEntityLiving.getY(),
-                    pEntityLiving.getZ(),
-                    SoundEvents.CROSSBOW_LOADING_END,
-                    pEntityLiving.getSoundSource(),
-                    1.0F,
-                    1.0F / (pLevel.getRandom().nextFloat() * 0.5F + 1.0F) + 0.2F
-            );
-        }
+    public boolean releaseUsing(ItemStack itemStack, Level pLevel, LivingEntity entity, int pTimeLeft) {
+        int timeHeld = this.getUseDuration(itemStack, entity) - pTimeLeft;
+        return getPowerForTime(timeHeld, itemStack, entity) >= 1.0F && isCharged(itemStack);
     }
 
     private static boolean tryLoadProjectiles(LivingEntity pShooter, ItemStack pCrossbowStack) {
         List<ItemStack> list = draw(pCrossbowStack, pShooter.getProjectile(pCrossbowStack), pShooter);
         if (!list.isEmpty()) {
-            pCrossbowStack.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.of(list));
+            pCrossbowStack.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.ofNonEmpty(list));
             return true;
         } else {
             return false;
@@ -154,7 +132,7 @@ public class BazookaItem extends ProjectileWeaponItem {
 
     @Override
     protected Projectile createProjectile(Level pLevel, LivingEntity pShooter, ItemStack pWeapon, ItemStack pAmmo, boolean pIsCrit) {
-        ThrownBalloon projectile = new ThrownBalloon(pShooter, pLevel);
+        ThrownBalloon projectile = new ThrownBalloon(pShooter, pLevel, pAmmo);
         projectile.setItem(pAmmo);
         return projectile;
     }
@@ -171,7 +149,7 @@ public class BazookaItem extends ProjectileWeaponItem {
             ChargedProjectiles chargedprojectiles = pWeapon.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.EMPTY);
             if (chargedprojectiles != null && !chargedprojectiles.isEmpty()) {
                 this.shoot(
-                        (ServerLevel) pLevel, pShooter, pHand, pWeapon, chargedprojectiles.getItems(), pVelocity, pInaccuracy, pShooter instanceof Player, pTarget
+                        (ServerLevel) pLevel, pShooter, pHand, pWeapon, chargedprojectiles.itemCopies(), pVelocity, pInaccuracy, pShooter instanceof Player, pTarget
                 );
                 if (pShooter instanceof ServerPlayer serverplayer) {
                     CriteriaTriggers.SHOT_CROSSBOW.trigger(serverplayer, pWeapon);
@@ -191,41 +169,45 @@ public class BazookaItem extends ProjectileWeaponItem {
     }
 
     @Override
-    public void onUseTick(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pCount) {
-        if (!pLevel.isClientSide) {
-            SoundEvent soundevent = this.getStartSound(0);
-            SoundEvent soundevent1 = SoundEvents.CROSSBOW_LOADING_MIDDLE.value();
-            float f = (float) (pStack.getUseDuration(pLivingEntity) - pCount) / (float) getChargeDuration(pStack);
-            if (f < 0.2F) {
+    public void onUseTick(Level level, LivingEntity entity, ItemStack itemStack, int ticksRemaining) {
+        if (!level.isClientSide()) {
+            CrossbowItem.ChargingSounds sounds = this.getChargingSounds(itemStack);
+            float tickPercent = (float)(itemStack.getUseDuration(entity) - ticksRemaining) / (float)getChargeDuration(itemStack, entity);
+            if (tickPercent < 0.2F) {
                 this.startSoundPlayed = false;
                 this.midLoadSoundPlayed = false;
             }
 
-            if (f >= 0.2F && !this.startSoundPlayed) {
+            if (tickPercent >= 0.2F && !this.startSoundPlayed) {
                 this.startSoundPlayed = true;
-                pLevel.playSound(null, pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(), soundevent, SoundSource.PLAYERS, 0.5F, 1.0F);
+                sounds.start().ifPresent((sound) -> level.playSound((Entity)null, entity.getX(), entity.getY(), entity.getZ(), (SoundEvent)sound.value(), SoundSource.PLAYERS, 0.5F, 1.0F));
             }
 
-            if (f >= 0.5F && !this.midLoadSoundPlayed) {
+            if (tickPercent >= 0.5F && !this.midLoadSoundPlayed) {
                 this.midLoadSoundPlayed = true;
-                pLevel.playSound(null, pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(), soundevent1, SoundSource.PLAYERS, 0.5F, 1.0F);
+                sounds.mid().ifPresent((sound) -> level.playSound((Entity)null, entity.getX(), entity.getY(), entity.getZ(), (SoundEvent)sound.value(), SoundSource.PLAYERS, 0.5F, 1.0F));
+            }
+
+            if (tickPercent >= 1.0F && !isCharged(itemStack) && tryLoadProjectiles(entity, itemStack)) {
+                sounds.end().ifPresent((sound) -> level.playSound((Entity)null, entity.getX(), entity.getY(), entity.getZ(), (SoundEvent)sound.value(), entity.getSoundSource(), 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.5F + 1.0F) + 0.2F));
             }
         }
+
     }
 
 
     @Override
     public int getUseDuration(ItemStack pStack, LivingEntity pEntity) {
-        return getChargeDuration(pStack) + 3;
+        return getChargeDuration(pStack,pEntity) + 3;
     }
 
-    public static int getChargeDuration(ItemStack pCrossbowStack) {
+    public static int getChargeDuration(ItemStack pCrossbowStack, LivingEntity user) {
         return 25;
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.CROSSBOW;
+    public ItemUseAnimation getUseAnimation(ItemStack pStack) {
+        return ItemUseAnimation.CROSSBOW;
     }
 
     private SoundEvent getStartSound(int pEnchantmentLevel) {
@@ -241,33 +223,17 @@ public class BazookaItem extends ProjectileWeaponItem {
         }
     }
 
-    private static float getPowerForTime(int pUseTime, ItemStack pCrossbowStack) {
-        float f = (float) pUseTime / (float) getChargeDuration(pCrossbowStack);
-        if (f > 1.0F) {
-            f = 1.0F;
+    private static float getPowerForTime(int timeHeld, ItemStack itemStack, LivingEntity holder) {
+        float pow = (float)timeHeld / (float)getChargeDuration(itemStack, holder);
+        if (pow > 1.0F) {
+            pow = 1.0F;
         }
 
-        return f;
+        return pow;
     }
 
-    @Override
-    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-        ChargedProjectiles chargedprojectiles = pStack.get(DataComponents.CHARGED_PROJECTILES);
-        if (chargedprojectiles != null && !chargedprojectiles.isEmpty()) {
-            ItemStack itemstack = chargedprojectiles.getItems().get(0);
-            pTooltipComponents.add(Component.translatable("item.minecraft.crossbow.projectile").append(CommonComponents.SPACE).append(itemstack.getDisplayName()));
-            if (pTooltipFlag.isAdvanced() && itemstack.is(Items.FIREWORK_ROCKET)) {
-                List<Component> list = Lists.newArrayList();
-                Items.FIREWORK_ROCKET.appendHoverText(itemstack, pContext, list, pTooltipFlag);
-                if (!list.isEmpty()) {
-                    for (int i = 0; i < list.size(); i++) {
-                        list.set(i, Component.literal("  ").append(list.get(i)).withStyle(ChatFormatting.GRAY));
-                    }
-
-                    pTooltipComponents.addAll(list);
-                }
-            }
-        }
+    CrossbowItem.ChargingSounds getChargingSounds(ItemStack itemStack) {
+        return (CrossbowItem.ChargingSounds) EnchantmentHelper.pickHighestLevel(itemStack, EnchantmentEffectComponents.CROSSBOW_CHARGING_SOUNDS).orElse(DEFAULT_SOUNDS);
     }
 
     @Override

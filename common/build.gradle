@@ -10,16 +10,13 @@ neoForge {
     if (at.exists()) {
         accessTransformers.from(at.absolutePath)
     }
-    parchment {
-        minecraftVersion = nyfs.versions.parchmentMinecraft.get()
-        mappingsVersion = nyfs.versions.parchmentVersion.get()
-    }
 }
 
 dependencies {
     compileOnly(nyfs.bundles.mixin.common.get())
     annotationProcessor nyfs.mixin.extras.common.get()
     compileOnly nyfs.config.api.common.get()
+    accessTransformers "net.ashwork.mc:transformers:${minecraft_version}.+"
 }
 
 configurations {

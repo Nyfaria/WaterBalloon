@@ -1,70 +1,41 @@
 package com.nyfaria.waterballoon.recipe;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.nyfaria.waterballoon.init.RecipeInit;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.DyeItem;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.DyedItemColor;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
-import net.minecraft.world.item.crafting.CraftingInput;
-import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.ShapedRecipePattern;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.display.*;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class BalloonRecipe implements CraftingRecipe {
-    final ShapedRecipePattern pattern;
-    final ItemStack result;
-    final String group;
-    final CraftingBookCategory category;
-    final boolean showNotification;
+public class BalloonRecipe extends NormalCraftingRecipe {
+    public static final MapCodec<BalloonRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec((i) -> i.group(CommonInfo.MAP_CODEC.forGetter((o) -> o.commonInfo), CraftingBookInfo.MAP_CODEC.forGetter((o) -> o.bookInfo), ShapedRecipePattern.MAP_CODEC.forGetter((o) -> o.pattern), ItemStackTemplate.CODEC.fieldOf("result").forGetter((o) -> o.result)).apply(i, BalloonRecipe::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, BalloonRecipe> STREAM_CODEC = StreamCodec.composite(CommonInfo.STREAM_CODEC, (o) -> o.commonInfo, CraftingBookInfo.STREAM_CODEC, (o) -> o.bookInfo, ShapedRecipePattern.STREAM_CODEC, (o) -> o.pattern, ItemStackTemplate.STREAM_CODEC, (o) -> o.result, BalloonRecipe::new);
+    private final ShapedRecipePattern pattern;
+    private final ItemStackTemplate result;
 
-    public BalloonRecipe(String group, CraftingBookCategory category, ShapedRecipePattern pattern, ItemStack result, boolean showNotification) {
-        this.group = group;
-        this.category = category;
+    public BalloonRecipe(Recipe.CommonInfo commonInfo, CraftingRecipe.CraftingBookInfo bookInfo, ShapedRecipePattern pattern, ItemStackTemplate result) {
+        super(commonInfo, bookInfo);
         this.pattern = pattern;
         this.result = result;
-        this.showNotification = showNotification;
     }
 
-    public BalloonRecipe(String group, CraftingBookCategory category, ShapedRecipePattern pattern, ItemStack result) {
-        this(group, category, pattern, result, true);
-    }
 
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<BalloonRecipe> getSerializer() {
         return RecipeInit.BALLOON_RECIPE.get();
     }
 
-    public String getGroup() {
-        return this.group;
+    @Override
+    protected PlacementInfo createPlacementInfo() {
+        return PlacementInfo.createFromOptionals(this.pattern.ingredients());
     }
 
-    public CraftingBookCategory category() {
-        return this.category;
-    }
-
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return this.result;
-    }
-
-    public NonNullList<Ingredient> getIngredients() {
-        return this.pattern.ingredients();
-    }
-
-    public boolean showNotification() {
-        return this.showNotification;
-    }
 
     public boolean canCraftInDimensions(int width, int height) {
         return width >= this.pattern.width() && height >= this.pattern.height();
@@ -74,9 +45,17 @@ public class BalloonRecipe implements CraftingRecipe {
         return this.pattern.matches(inv);
     }
 
-    public ItemStack assemble(CraftingInput craftingContainer, HolderLookup.Provider registries) {
-        ItemStack itemStack = this.getResultItem(registries).copy();
-        return DyedItemColor.applyDyes(itemStack, List.of(((DyeItem) craftingContainer.getItem(1).getItem())));
+
+
+    public ItemStack assemble(CraftingInput craftingContainer) {
+        ItemStack itemStack = this.result.create();
+        for (int i = 0; i < craftingContainer.size(); i++) {
+            ItemStack stack = craftingContainer.getItem(i);
+            if (stack.has(DataComponents.DYE)) {
+                return DyedItemColor.applyDyes(itemStack, List.of(stack.getOrDefault(DataComponents.DYE, DyeColor.WHITE)));
+            }
+        }
+        return itemStack;
     }
 
     public int getWidth() {
@@ -87,57 +66,8 @@ public class BalloonRecipe implements CraftingRecipe {
         return this.pattern.height();
     }
 
-    public boolean isIncomplete() {
-        NonNullList<Ingredient> nonNullList = this.getIngredients();
-        return nonNullList.isEmpty() || nonNullList.stream().filter((ingredient) -> {
-            return !ingredient.isEmpty();
-        }).anyMatch((ingredient) -> {
-            return ingredient.getItems().length == 0;
-        });
+    public List<RecipeDisplay> display() {
+        return List.of(new ShapedCraftingRecipeDisplay(this.pattern.width(), this.pattern.height(), this.pattern.ingredients().stream().map((e) -> (SlotDisplay)e.map(Ingredient::display).orElse(SlotDisplay.Empty.INSTANCE)).toList(), new SlotDisplay.ItemStackSlotDisplay(this.result), new SlotDisplay.ItemSlotDisplay(Items.CRAFTING_TABLE)));
     }
 
-    public static class Serializer implements RecipeSerializer<BalloonRecipe> {
-        public static final MapCodec<BalloonRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
-            return instance.group(Codec.STRING.optionalFieldOf("group", "").forGetter((shapedRecipe) -> {
-                return shapedRecipe.group;
-            }), CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter((shapedRecipe) -> {
-                return shapedRecipe.category;
-            }), ShapedRecipePattern.MAP_CODEC.forGetter((shapedRecipe) -> {
-                return shapedRecipe.pattern;
-            }), ItemStack.STRICT_CODEC.fieldOf("result").forGetter((shapedRecipe) -> {
-                return shapedRecipe.result;
-            }), Codec.BOOL.optionalFieldOf("show_notification", true).forGetter((shapedRecipe) -> {
-                return shapedRecipe.showNotification;
-            })).apply(instance, BalloonRecipe::new);
-        });
-        public static final StreamCodec<RegistryFriendlyByteBuf, BalloonRecipe> STREAM_CODEC = StreamCodec.of(BalloonRecipe.Serializer::toNetwork, BalloonRecipe.Serializer::fromNetwork);
-
-        public Serializer() {
-        }
-
-        public MapCodec<BalloonRecipe> codec() {
-            return CODEC;
-        }
-
-        public StreamCodec<RegistryFriendlyByteBuf, BalloonRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
-
-        private static BalloonRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-            String string = buffer.readUtf();
-            CraftingBookCategory craftingBookCategory = (CraftingBookCategory)buffer.readEnum(CraftingBookCategory.class);
-            ShapedRecipePattern shapedRecipePattern = (ShapedRecipePattern)ShapedRecipePattern.STREAM_CODEC.decode(buffer);
-            ItemStack itemStack = (ItemStack)ItemStack.STREAM_CODEC.decode(buffer);
-            boolean bl = buffer.readBoolean();
-            return new BalloonRecipe(string, craftingBookCategory, shapedRecipePattern, itemStack, bl);
-        }
-
-        private static void toNetwork(RegistryFriendlyByteBuf buffer, BalloonRecipe recipe) {
-            buffer.writeUtf(recipe.group);
-            buffer.writeEnum(recipe.category);
-            ShapedRecipePattern.STREAM_CODEC.encode(buffer, recipe.pattern);
-            ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
-            buffer.writeBoolean(recipe.showNotification);
-        }
-    }
 }

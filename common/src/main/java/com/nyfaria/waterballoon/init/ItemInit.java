@@ -6,6 +6,7 @@ import com.nyfaria.waterballoon.item.BazookaItem;
 import com.nyfaria.waterballoon.item.SlingShotItem;
 import com.nyfaria.waterballoon.registration.RegistrationProvider;
 import com.nyfaria.waterballoon.registration.RegistryObject;
+import com.nyfaria.waterballoon.registration.specialised.*;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -17,7 +18,7 @@ import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.block.Blocks;
 
 public class ItemInit {
-    public static final RegistrationProvider<Item> ITEMS = RegistrationProvider.get(Registries.ITEM, Constants.MODID);
+    public static final ItemRegistrationProvider ITEMS = ItemRegistrationProvider.get(Constants.MODID);
 
     public static final RegistrationProvider<CreativeModeTab> CREATIVE_MODE_TABS = RegistrationProvider.get(Registries.CREATIVE_MODE_TAB, Constants.MODID);
     public static final RegistryObject<CreativeModeTab, CreativeModeTab> TAB = CREATIVE_MODE_TABS.register(Constants.MODID, () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
@@ -28,9 +29,9 @@ public class ItemInit {
                     }).title(Component.translatable("itemGroup." + Constants.MODID + ".tab"))
             .build());
 
-    public static final RegistryObject<Item, BalloonItem> WATER_BALLOON = ITEMS.register("water_balloon", () -> new BalloonItem(getItemProperties().component(DataComponents.DYED_COLOR, new DyedItemColor(-1, true))));
-    public static final RegistryObject<Item, BazookaItem> BAZOOKA = ITEMS.register("balloon_bazooka", () -> new BazookaItem(getItemProperties()));
-    public static final RegistryObject<Item, SlingShotItem> SLING_SHOT = ITEMS.register("slingshot", () -> new SlingShotItem(getItemProperties().component(DataComponents.DYED_COLOR, new DyedItemColor(-1, true))));
+    public static final RegistryObject<Item, BalloonItem> WATER_BALLOON = ITEMS.register("water_balloon",getItemProperties().component(DataComponents.DYED_COLOR, new DyedItemColor(-1)), BalloonItem::new);
+    public static final RegistryObject<Item, BazookaItem> BAZOOKA = ITEMS.register("balloon_bazooka",getItemProperties(), BazookaItem::new);
+    public static final RegistryObject<Item, SlingShotItem> SLING_SHOT = ITEMS.register("slingshot", getItemProperties().component(DataComponents.DYED_COLOR, new DyedItemColor(-1)),SlingShotItem::new);
 
     public static Item.Properties getItemProperties() {
         return new Item.Properties();

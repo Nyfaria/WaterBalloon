@@ -48,8 +48,12 @@ if (legacy) {
             }
         }
         runs {
-            data {
-                data()
+            clientData {
+                clientData()
+                programArguments.addAll dataArguments
+            }
+            serverData {
+                serverData()
                 programArguments.addAll dataArguments
             }
         }

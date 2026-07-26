@@ -6,7 +6,9 @@ plugins {
 }
 
 def legacy = nyfs.versions.era.get() == "legacy"
-
+configurations.all {
+    resolutionStrategy.cacheDynamicVersionsFor(1, "minutes")
+}
 registrationUtils {
     group "com.nyfaria.${mod_id}.registration"
     projects {

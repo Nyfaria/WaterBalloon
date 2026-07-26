@@ -5,15 +5,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ProjectileWeaponItem;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,7 +24,7 @@ public class SlingShotItem extends ProjectileWeaponItem {
         super(properties);
     }
 
-    public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged) {
+    public boolean releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged) {
         if (livingEntity instanceof Player player) {
             ItemStack itemStack = player.getProjectile(stack);
             if (!itemStack.isEmpty()) {
@@ -42,14 +38,17 @@ public class SlingShotItem extends ProjectileWeaponItem {
 
                     level.playSound((Player)null, player.getX(), player.getY(), player.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
                     player.awardStat(Stats.ITEM_USED.get(this));
+                    return true;
                 }
             }
+            return false;
         }
+        return false;
     }
 
     @Override
     protected Projectile createProjectile(Level pLevel, LivingEntity pShooter, ItemStack pWeapon, ItemStack pAmmo, boolean pIsCrit) {
-        ThrownBalloon balloon = new ThrownBalloon(pShooter,pLevel);
+        ThrownBalloon balloon = new ThrownBalloon(pShooter,pLevel,pAmmo);
         balloon.setItem(pAmmo);
         return balloon;
     }
@@ -72,18 +71,18 @@ public class SlingShotItem extends ProjectileWeaponItem {
         return 72000;
     }
 
-    public UseAnim getUseAnimation(ItemStack stack) {
-        return UseAnim.BOW;
+    public ItemUseAnimation getUseAnimation(ItemStack stack) {
+        return ItemUseAnimation.BOW;
     }
 
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand usedHand) {
         ItemStack itemStack = player.getItemInHand(usedHand);
         boolean bl = !player.getProjectile(itemStack).isEmpty();
         if (!player.hasInfiniteMaterials() && !bl) {
-            return InteractionResultHolder.fail(itemStack);
+            return InteractionResult.FAIL;
         } else {
             player.startUsingItem(usedHand);
-            return InteractionResultHolder.consume(itemStack);
+            return InteractionResult.CONSUME;
         }
     }
 

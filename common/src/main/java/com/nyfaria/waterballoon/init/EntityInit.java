@@ -4,7 +4,8 @@ import com.nyfaria.waterballoon.Constants;
 import com.nyfaria.waterballoon.entity.ThrownBalloon;
 import com.nyfaria.waterballoon.registration.RegistrationProvider;
 import com.nyfaria.waterballoon.registration.RegistryObject;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.*;
+import net.minecraft.resources.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,7 +25,7 @@ public class EntityInit {
 
 
     protected static <T extends Entity> RegistryObject<EntityType<?>,EntityType<T>> registerEntity(String name, Supplier<EntityType.Builder<T>> supplier) {
-        return ENTITIES.register(name, () -> supplier.get().build(Constants.MODID + ":" + name));
+        return ENTITIES.register(name, () -> supplier.get().build(ResourceKey.create(Registries.ENTITY_TYPE,Identifier.fromNamespaceAndPath(Constants.MODID , name))));
     }
 
     protected static <T extends LivingEntity> RegistryObject<EntityType<?>,EntityType<T>> registerLivingEntity(String name, Supplier<EntityType.Builder<T>> supplier,

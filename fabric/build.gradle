@@ -5,15 +5,14 @@ plugins {
     id("com.nyfaria.moddingtools.dependencies")
     id("com.nyfaria.moddingtools.publishing")
 }
-
+configurations.all {
+    resolutionStrategy.cacheDynamicVersionsFor(1, "minutes")
+}
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
-    mappings loom.layered() {
-        officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${nyfs.versions.parchmentMinecraft.get()}:${nyfs.versions.parchmentVersion.get()}@zip")
-    }
-    modImplementation nyfs.fabric.loader
-    modImplementation nyfs.fabric.api
+
+    implementation nyfs.fabric.loader
+    implementation nyfs.fabric.api
 }
 
 loom {

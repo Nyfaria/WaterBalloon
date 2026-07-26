@@ -5,11 +5,11 @@ import com.nyfaria.waterballoon.recipe.BalloonRecipe;
 import com.nyfaria.waterballoon.registration.RegistrationProvider;
 import com.nyfaria.waterballoon.registration.RegistryObject;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.*;
 
 public class RecipeInit {
     public static final RegistrationProvider<RecipeSerializer<?>> RECIPE_SERIALIZERS = RegistrationProvider.get(BuiltInRegistries.RECIPE_SERIALIZER, Constants.MODID);
-    public static final RegistryObject<RecipeSerializer<?>,RecipeSerializer<BalloonRecipe>> BALLOON_RECIPE = RECIPE_SERIALIZERS.register("balloon", BalloonRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<?>,RecipeSerializer<BalloonRecipe>> BALLOON_RECIPE = RECIPE_SERIALIZERS.register("balloon", ()->new RecipeSerializer<>(BalloonRecipe.MAP_CODEC,BalloonRecipe.STREAM_CODEC));
 
     public static void loadClass() {
     }
