@@ -2,7 +2,9 @@ package com.nyfaria.waterballoon.entity;
 
 import com.nyfaria.waterballoon.init.EntityInit;
 import com.nyfaria.waterballoon.init.ItemInit;
+import net.minecraft.core.*;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.*;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AreaEffectCloud;
@@ -13,9 +15,8 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.phys.*;
 import org.jetbrains.annotations.Nullable;
 
 public class ThrownBalloon extends ThrowableItemProjectile {
@@ -40,6 +41,9 @@ public class ThrownBalloon extends ThrowableItemProjectile {
     @Override
     protected void onHit(HitResult $$0) {
         super.onHit($$0);
+        if(!level().isClientSide){
+            extinguishFires();
+        }
         this.discard();
     }
 
@@ -62,6 +66,7 @@ public class ThrownBalloon extends ThrowableItemProjectile {
             cloud.setFixedColor(0x0000FF);
             cloud.setPotion(Potions.SLOWNESS);
             level().addFreshEntity(cloud);
+            level().playSound(null, blockPosition(), SoundEvents.DOLPHIN_SPLASH, getSoundSource(), 1.0F, 1.0F);
 
         }
 
@@ -85,5 +90,26 @@ public class ThrownBalloon extends ThrowableItemProjectile {
     @Override
     protected float getGravity() {
         return 0.1f;
+    }
+
+    private void extinguishFires() {
+        int radius = 2;
+        BlockPos center = blockPosition();
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius; y <= radius; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    BlockPos pos = center.offset(x, y, z);
+                    if (pos.distSqr(center) <= (double)(radius * radius)) {
+                        var state = level().getBlockState(pos);
+                        if (state.is(Blocks.FIRE) || state.is(Blocks.SOUL_FIRE)) {
+                            level().removeBlock(pos, false);
+                        }
+                    }
+                }
+            }
+        }
+        level().getEntities(this, new AABB(getX()-2,getY()+2,getZ()-2,getX()+2,getY(),getZ()+2)).forEach(
+                e->e.setRemainingFireTicks(0)
+        );
     }
 }
