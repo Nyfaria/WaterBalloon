@@ -1,6 +1,7 @@
 package com.nyfaria.waterballoon.item;
 
 import com.nyfaria.waterballoon.entity.ThrownBalloon;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -31,12 +32,12 @@ public class SlingShotItem extends ProjectileWeaponItem {
         if (livingEntity instanceof Player player) {
             ItemStack itemStack = player.getProjectile(stack);
             if (!itemStack.isEmpty()) {
-                int i = this.getUseDuration(stack) - timeCharged;
+                int i = this.getUseDuration(stack,livingEntity) - timeCharged;
                 float f = getPowerForTime(i);
                 if (!((double)f < 0.1)) {
                     List<ItemStack> list = draw(stack, itemStack, player);
                     if (!level.isClientSide() && !list.isEmpty()) {
-                        this.shoot(level, player, player.getUsedItemHand(), stack, list, f * 3.0F, 1.0F, f == 1.0F, (LivingEntity)null);
+                        this.shoot((ServerLevel) level, player, player.getUsedItemHand(), stack, list, f * 3.0F, 1.0F, f == 1.0F, (LivingEntity)null);
                     }
 
                     level.playSound((Player)null, player.getX(), player.getY(), player.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
@@ -67,7 +68,7 @@ public class SlingShotItem extends ProjectileWeaponItem {
         return f;
     }
 
-    public int getUseDuration(ItemStack stack) {
+    public int getUseDuration(ItemStack stack, LivingEntity livingEntity) {
         return 72000;
     }
 

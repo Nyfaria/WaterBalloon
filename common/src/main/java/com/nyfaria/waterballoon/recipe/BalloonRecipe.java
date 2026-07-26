@@ -14,6 +14,7 @@ import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -69,11 +70,11 @@ public class BalloonRecipe implements CraftingRecipe {
         return width >= this.pattern.width() && height >= this.pattern.height();
     }
 
-    public boolean matches(CraftingContainer inv, Level level) {
+    public boolean matches(CraftingInput inv, Level level) {
         return this.pattern.matches(inv);
     }
 
-    public ItemStack assemble(CraftingContainer craftingContainer, HolderLookup.Provider registries) {
+    public ItemStack assemble(CraftingInput craftingContainer, HolderLookup.Provider registries) {
         ItemStack itemStack = this.getResultItem(registries).copy();
         return DyedItemColor.applyDyes(itemStack, List.of(((DyeItem) craftingContainer.getItem(1).getItem())));
     }

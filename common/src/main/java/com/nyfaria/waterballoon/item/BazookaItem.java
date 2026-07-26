@@ -7,6 +7,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -84,7 +85,7 @@ public class BazookaItem extends ProjectileWeaponItem {
 
     @Override
     public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving, int pTimeLeft) {
-        int i = this.getUseDuration(pStack) - pTimeLeft;
+        int i = this.getUseDuration(pStack, pEntityLiving) - pTimeLeft;
         float f = getPowerForTime(i, pStack);
         if (f >= 1.0F && !isCharged(pStack) && tryLoadProjectiles(pEntityLiving, pStack)) {
             pLevel.playSound(
@@ -170,7 +171,7 @@ public class BazookaItem extends ProjectileWeaponItem {
             ChargedProjectiles chargedprojectiles = pWeapon.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.EMPTY);
             if (chargedprojectiles != null && !chargedprojectiles.isEmpty()) {
                 this.shoot(
-                        pLevel, pShooter, pHand, pWeapon, chargedprojectiles.getItems(), pVelocity, pInaccuracy, pShooter instanceof Player, pTarget
+                        (ServerLevel) pLevel, pShooter, pHand, pWeapon, chargedprojectiles.getItems(), pVelocity, pInaccuracy, pShooter instanceof Player, pTarget
                 );
                 if (pShooter instanceof ServerPlayer serverplayer) {
                     CriteriaTriggers.SHOT_CROSSBOW.trigger(serverplayer, pWeapon);
@@ -192,10 +193,9 @@ public class BazookaItem extends ProjectileWeaponItem {
     @Override
     public void onUseTick(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pCount) {
         if (!pLevel.isClientSide) {
-            int i = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, pStack);
-            SoundEvent soundevent = this.getStartSound(i);
-            SoundEvent soundevent1 = i == 0 ? SoundEvents.CROSSBOW_LOADING_MIDDLE : null;
-            float f = (float) (pStack.getUseDuration() - pCount) / (float) getChargeDuration(pStack);
+            SoundEvent soundevent = this.getStartSound(0);
+            SoundEvent soundevent1 = SoundEvents.CROSSBOW_LOADING_MIDDLE.value();
+            float f = (float) (pStack.getUseDuration(pLivingEntity) - pCount) / (float) getChargeDuration(pStack);
             if (f < 0.2F) {
                 this.startSoundPlayed = false;
                 this.midLoadSoundPlayed = false;
@@ -206,21 +206,21 @@ public class BazookaItem extends ProjectileWeaponItem {
                 pLevel.playSound(null, pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(), soundevent, SoundSource.PLAYERS, 0.5F, 1.0F);
             }
 
-            if (f >= 0.5F && soundevent1 != null && !this.midLoadSoundPlayed) {
+            if (f >= 0.5F && !this.midLoadSoundPlayed) {
                 this.midLoadSoundPlayed = true;
                 pLevel.playSound(null, pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(), soundevent1, SoundSource.PLAYERS, 0.5F, 1.0F);
             }
         }
     }
 
+
     @Override
-    public int getUseDuration(ItemStack pStack) {
+    public int getUseDuration(ItemStack pStack, LivingEntity pEntity) {
         return getChargeDuration(pStack) + 3;
     }
 
     public static int getChargeDuration(ItemStack pCrossbowStack) {
-        int i = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, pCrossbowStack);
-        return i == 0 ? 25 : 25 - 5 * i;
+        return 25;
     }
 
     @Override
@@ -231,13 +231,13 @@ public class BazookaItem extends ProjectileWeaponItem {
     private SoundEvent getStartSound(int pEnchantmentLevel) {
         switch (pEnchantmentLevel) {
             case 1:
-                return SoundEvents.CROSSBOW_QUICK_CHARGE_1;
+                return SoundEvents.CROSSBOW_QUICK_CHARGE_1.value();
             case 2:
-                return SoundEvents.CROSSBOW_QUICK_CHARGE_2;
+                return SoundEvents.CROSSBOW_QUICK_CHARGE_2.value();
             case 3:
-                return SoundEvents.CROSSBOW_QUICK_CHARGE_3;
+                return SoundEvents.CROSSBOW_QUICK_CHARGE_3.value();
             default:
-                return SoundEvents.CROSSBOW_LOADING_START;
+                return SoundEvents.CROSSBOW_LOADING_START.value();
         }
     }
 
