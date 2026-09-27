@@ -41,3 +41,8 @@ tasks.named("sourcesJar", Jar) {
     dependsOn(configurations.commonResources)
     from(configurations.commonResources)
 }
+
+sourceSets.main.resources {
+    srcDir project(":common").file('src/generated/resources').getAbsolutePath()
+    exclude '.cache'
+}

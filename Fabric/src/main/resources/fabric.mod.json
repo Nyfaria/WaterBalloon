@@ -22,7 +22,7 @@
     "${mod_id}.mixins.json"
   ],
   "depends": {
-    "fabricloader": "${fabric_loader_version}",
+    "fabricloader": ">=${fabric_loader_version}",
     "fabric": "*",
     "minecraft": "${minecraft_version}",
     "java": ">=${java_version}"
